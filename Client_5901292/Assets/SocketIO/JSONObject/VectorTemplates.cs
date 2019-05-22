@@ -1,5 +1,6 @@
 using UnityEngine;
 
+#pragma warning disable 0618
 public static partial class JSONTemplates {
 
 	/*
