@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    [SerializeField]int damagePerHit = 0;
     [SerializeField] GameObject bulletObj = null;
     [SerializeField] Transform shootPosition = null;
     [SerializeField] ParticleSystem GunParticle = null;
@@ -34,11 +35,13 @@ public class Gun : MonoBehaviour
 
         var bullet = Instantiate(bulletObj,shootPosition.position,shootPosition.rotation);
         GunParticle.Play();
-        /* DisableGun(); */
+        DisableGun();
     }
     public void Shoot(LayerMask mask)
     {
         var bullet = Instantiate(bulletObj,shootPosition.position,shootPosition.rotation);
+        bullet.AddComponent(typeof(CollideChecker));
+        bullet.GetComponent<CollideChecker>().SetUp(damagePerHit,mask);
         GunParticle.Play();
         DisableGun();
     }

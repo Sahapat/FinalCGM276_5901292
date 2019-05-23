@@ -21,30 +21,29 @@ public class WeaponRotater : MonoBehaviour
             }
         }
     }
-    [SerializeField]float currentAngle= 0f;
+    [SerializeField] float currentAngle = 0f;
     [SerializeField] RotaterClamp rotaterClamp = RotaterClamp.Defualt;
     [SerializeField] float speed = 5f;
     [SerializeField] int direction = 1;
     [SerializeField] bool isRotate = false;
 
-    [SerializeField]LineRenderer laserShowing = null;
-    
+    [SerializeField] LineRenderer laserShowing = null;
+
     void FixedUpdate()
     {
         if (isRotate)
         {
-            transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z+ speed * Time.deltaTime*direction);
-            
-            if(direction > 0)
+            transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
+            if (direction > 0)
             {
-                if(transform.eulerAngles.z < 300&&transform.eulerAngles.z > rotaterClamp.MinAngle)
+                if (transform.eulerAngles.z < 300 && transform.eulerAngles.z > rotaterClamp.MinAngle)
                 {
                     direction = -1;
                 }
             }
             else
             {
-                if(transform.eulerAngles.z > 300 && transform.eulerAngles.z < rotaterClamp.MaxAngle )
+                if (transform.eulerAngles.z > 300 && transform.eulerAngles.z < rotaterClamp.MaxAngle)
                 {
                     direction = 1;
                 }
