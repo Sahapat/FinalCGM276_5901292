@@ -6,17 +6,18 @@ public class GameCore
     public static PlayerDataJson clientPlayerData = null;
     public static PlayerDataJson otherPlayerData = null;
     public static GameManager gamemanager = null;
-    public static UiManager uiManager = null;
+    public static UIManager uiManager = null;
 }
 public class GameManager : MonoBehaviour
 {
     [SerializeField]Character[] m_clients = null;
+
     private bool isSetUp = false;
 
     void Awake()
     {
         GameCore.gamemanager = this.GetComponent<GameManager>();
-        GameCore.uiManager = FindObjectOfType<UiManager>();
+        GameCore.uiManager = FindObjectOfType<UIManager>();
     }
     void FixedUpdate()
     {
@@ -30,6 +31,5 @@ public class GameManager : MonoBehaviour
     }
     public void SetUp()
     {
-        GameCore.uiManager.CloseLobby();
     }
 }
