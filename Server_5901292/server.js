@@ -22,6 +22,8 @@ io.on('connection', function (socket) {
                 name: data.name,
                 characterId: numPlayer-1
             }
+
+            console.log("player: "+data.name+" has connected");
             socket.broadcast.emit('otherPlayerConnected', resLogin);
             socket.emit('connected', resLogin);
 

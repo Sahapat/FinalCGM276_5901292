@@ -35,6 +35,7 @@ public class NetworkManager : MonoBehaviour
     }
     void OnLoginRequire(SocketIOEvent socketIOEvent)
     {
-        
+        string data = JsonUtility.ToJson(new PlayerDataJson(MainMenu.inputString,0));
+        m_socketIoComponent.Emit("login",new JSONObject(data));
     }
 }
