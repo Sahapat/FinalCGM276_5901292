@@ -17,7 +17,6 @@ public class Gun : MonoBehaviour
     {
         weaponRotater = GetComponent<WeaponRotater>();
         GunParticle.Stop();
-        EnableGun();
     }
     public void EnableGun()
     {

@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Character : MonoBehaviour
 {
+    [SerializeField] int clientId = 0;
     [SerializeField] int maxHealth = 100;
     [SerializeField] Gun gun = null;
     [SerializeField] LayerMask targetLayer = 0;
@@ -14,12 +16,9 @@ public class Character : MonoBehaviour
         characterHealth = new Health(maxHealth);
         characterHealth.OnHPChanged += UpdateHP;
     }
-    void Update()
+    public void DoShoot(int id)
     {
-    }
-    public void DoShoot(bool isClient)
-    {
-        if (isClient)
+        if (this.clientId == id)
         {
             gun.Shoot(targetLayer);
         }
@@ -27,6 +26,9 @@ public class Character : MonoBehaviour
         {
             gun.Shoot();
         }
+    }
+    public void DoMoveAndJump(Vector3 position)
+    {
     }
     public void TakeDamage(int Damage)
     {
