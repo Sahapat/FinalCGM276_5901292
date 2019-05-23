@@ -11,6 +11,12 @@ public class NetworkManager : MonoBehaviour
     {
         m_socketIoComponent.On("connect",OnConnect);
         m_socketIoComponent.On("connected",OnConnected);
+        m_socketIoComponent.On("hostable",OnHostable);
+        m_socketIoComponent.On("not hostable",OnNotHostable);
+    }
+    public void CreateHost()
+    {
+        m_socketIoComponent.Emit("hosting");
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
@@ -20,5 +26,15 @@ public class NetworkManager : MonoBehaviour
     void OnConnected(SocketIOEvent socketIOEvent)
     {
         print("Connected");
+        GameCore.uiManager.EnableMainButton();
+    }
+    void OnHostable(SocketIOEvent socketIOEvent)
+    {
+        print("can host");
+    }
+    void OnNotHostable(SocketIOEvent socketIOEvent)
+    {
+        GameCore.uiManager.CloseLobbySection();
+        GameCore.uiManager.OpenMainSection();
     }
 }

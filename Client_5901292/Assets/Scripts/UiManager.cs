@@ -6,8 +6,8 @@ public class UIManager : MonoBehaviour
 {
     [Header("MainSection")]
     [SerializeField] Text mainSection_PlayerName = null;
-    [SerializeField] Button createBtn = null;
-    [SerializeField] Button joinBtn = null;
+    [SerializeField] GameObject createBtn = null;
+    [SerializeField] GameObject joinBtn = null;
 
     [Header("LobbyListSection")]
     [SerializeField] UILobby[] uiLobbys = null;
@@ -72,8 +72,8 @@ public class UIManager : MonoBehaviour
     }
     public void EnableMainButton()
     {
-        createBtn.enabled = true;
-        createBtn.enabled = true;
+        createBtn.SetActive(true);
+        joinBtn.SetActive(true);
     }
     void InMainSection()
     {
@@ -81,7 +81,6 @@ public class UIManager : MonoBehaviour
     }
     void InLobbySection()
     {
-
     }
     void InGameSection()
     {

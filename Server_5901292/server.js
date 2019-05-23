@@ -2,7 +2,8 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var usernames = {};
+var lobbys = ['lobby1','lobby2','lobby3','lobby4','lobby5'];
+var playerInlobbys = [0,0,0,0,0];
 
 server.listen(3000, function () {
     console.log("Server runing at port 3000");
@@ -13,15 +14,30 @@ io.on('connection', function (socket) {
 
     socket.on('login',function(data)
     {
-        socket.username = data.name;
-        socket.lobby = 'mainlobby';
         socket.emit('connected');
         console.log(data.name + " has connected");
     })
-
-    socket.on('disconnect',function()
+    socket.on('hosting',function()
     {
-        delete usernames[socket.username];
-        io.sockets.emit('update user',socket.username);
+        var lobbyIndex = checkEmptyLobby();
+        if(lobbyIndex == -1)
+        {
+            socket.emit('not hostable');
+        }
+        else
+        {
+            socket.emit('hostable');
+        }
     })
 })
+function checkEmptyLobby()
+{
+    for(var i =0;i<5;i++)
+    {
+        if(playerInlobbys[i] == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
