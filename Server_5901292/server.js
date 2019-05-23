@@ -13,7 +13,9 @@ io.on('connection', function (socket) {
 
     socket.on('login',function(data)
     {
-        socket.emit('connected');
+        socket.username = data.name;
+        usernames[data.name] = data.name;
+        socket.emit('connect success');
         console.log(data.name + " has connected");
     })
 
