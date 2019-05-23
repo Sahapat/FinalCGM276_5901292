@@ -36,5 +36,6 @@ public class NetworkManager : MonoBehaviour
     {
         GameCore.uiManager.CloseLobbySection();
         GameCore.uiManager.OpenMainSection();
+        print("can't host");
     }
 }

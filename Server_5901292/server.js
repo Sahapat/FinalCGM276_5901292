@@ -24,6 +24,7 @@ io.on('connection', function (socket) {
         if(lobbyIndex == -1)
         {
             socket.emit('not hostable');
+            console.log("lobby is full");
         }
         else
         {
