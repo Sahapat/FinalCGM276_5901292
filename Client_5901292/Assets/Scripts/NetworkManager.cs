@@ -9,31 +9,23 @@ public class NetworkManager : MonoBehaviour
 
     void Start()
     {
-        m_socketIoComponent.On("login require", OnLoginRequire);
-        m_socketIoComponent.On("connected", OnConnected);
-        m_socketIoComponent.On("otherPlayerConnected", OnOtherPlayerConnected);
-        m_socketIoComponent.On("game start", OnGameStart);
+        m_socketIoComponent.On("connect",OnConnect);
+        m_socketIoComponent.On("connected",OnConnected);
+        m_socketIoComponent.On("disconnect",OnDisconnect)
+    }
+    void OnConnect(SocketIOEvent socketIOEvent)
+    {
+        string data = JsonUtility.ToJson(new PlayerDataJson(MainMenu.inputString));
+        m_socketIoComponent.Emit("login",new JSONObject(data));
     }
     void OnConnected(SocketIOEvent socketIOEvent)
     {
-        var data = socketIOEvent.data.ToString();
-        GameCore.clientPlayerData = PlayerDataJson.CreateFromJson(data);
-        print("Connect success");
+        GameCore.uiManager.EnableMainButton();
     }
-    void OnOtherPlayerConnected(SocketIOEvent socketIOEvent)
+    void OnDisconnect(SocketIOEvent socketIOEvent)
     {
-        var data = socketIOEvent.data.ToString();
-        GameCore.otherPlayerData = PlayerDataJson.CreateFromJson(data);
-        print("player: "+GameCore.otherPlayerData.name+" has connected");
-    }
-    void OnGameStart(SocketIOEvent socketIOEvent)
-    {
-        GameCore.gamemanager.SetUp();
-        print("Game start");
-    }
-    void OnLoginRequire(SocketIOEvent socketIOEvent)
-    {
-        string data = JsonUtility.ToJson(new PlayerDataJson(MainMenu.inputString, 0));
-        m_socketIoComponent.Emit("login", new JSONObject(data));
+        var data = JsonUtility.FromJson<string>(socketIOEvent.data.ToString());
+
+        print($"user {data} has disconnect");
     }
 }

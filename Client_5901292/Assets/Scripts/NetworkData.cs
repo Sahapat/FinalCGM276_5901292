@@ -5,12 +5,9 @@ using UnityEngine;
 public class PlayerDataJson
 {
     public string name;
-    public int characterId;
-    
-    public PlayerDataJson(string name,int characterId)
+    public PlayerDataJson(string name)
     {
         this.name = name;
-        this.characterId = characterId;
     }
     public static PlayerDataJson CreateFromJson(string data)
     {
