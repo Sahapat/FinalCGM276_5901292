@@ -14,6 +14,7 @@ io.on('connection', function (socket) {
 
     socket.on('login',function(data)
     {
+        socket.username = data.name;
         socket.emit('connected');
         console.log(data.name + " has connected");
     })
@@ -27,6 +28,7 @@ io.on('connection', function (socket) {
         else
         {
             socket.emit('hostable');
+            console.log(socket.username+" host at "+lobbys[lobbyIndex]);
         }
     })
 })
