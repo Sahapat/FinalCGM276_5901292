@@ -28,6 +28,8 @@ io.on('connection', function (socket) {
         }
         else
         {
+            socket.lobby = lobbys[lobbyIndex];
+            playerInlobbys[lobbyIndex] = 1;
             socket.emit('hostable');
             console.log(socket.username+" host at "+lobbys[lobbyIndex]);
         }
