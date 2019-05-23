@@ -13,8 +13,6 @@ io.on('connection', function (socket) {
 
     socket.on('login',function(data)
     {
-        socket.username = data.name;
-        usernames[data.name] = data.name;
         socket.emit('connected');
         console.log(data.name + " has connected");
     })
