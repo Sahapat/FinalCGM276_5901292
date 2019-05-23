@@ -17,3 +17,9 @@ public class PlayerDataJson
         return JsonUtility.FromJson<PlayerDataJson>(data);
     }
 }
+
+[Serializable]
+public class SyncDataJson
+{
+
+}

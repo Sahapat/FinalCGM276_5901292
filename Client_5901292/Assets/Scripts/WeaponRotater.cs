@@ -60,6 +60,11 @@ public class WeaponRotater : MonoBehaviour
     {
         isRotate = true;
     }
+    public void StartRotate(float rotationZ)
+    {
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,rotationZ);
+        isRotate = true;
+    }
     public void StopRotate()
     {
         isRotate = false;

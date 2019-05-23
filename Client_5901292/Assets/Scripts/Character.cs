@@ -30,6 +30,10 @@ public class Character : MonoBehaviour
     public void DoMoveAndJump(Vector3 position)
     {
     }
+    public void SetPositionAndRotation(Vector3 position,float rotationZ)
+    {
+
+    }   
     public void TakeDamage(int Damage)
     {
         characterHealth.HP += Damage;
