@@ -11,7 +11,7 @@ public class NetworkManager : MonoBehaviour
     {
         m_socketIoComponent.On("connect",OnConnect);
         m_socketIoComponent.On("connected",OnConnected);
-        m_socketIoComponent.On("disconnect",OnDisconnect)
+        m_socketIoComponent.On("disconnect",OnDisconnect);
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
@@ -21,6 +21,7 @@ public class NetworkManager : MonoBehaviour
     void OnConnected(SocketIOEvent socketIOEvent)
     {
         GameCore.uiManager.EnableMainButton();
+        print("connected");
     }
     void OnDisconnect(SocketIOEvent socketIOEvent)
     {

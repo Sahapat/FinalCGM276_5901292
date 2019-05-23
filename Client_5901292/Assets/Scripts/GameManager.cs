@@ -23,10 +23,6 @@ public class GameManager : MonoBehaviour
     {
         if(isSetUp)
         {
-            if(Input.GetMouseButtonDown(0))
-            {
-                m_clients[GameCore.clientPlayerData.characterId].DoShoot(GameCore.clientPlayerData.characterId);
-            }
         }
     }
     public void SetUp()
