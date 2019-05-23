@@ -16,6 +16,7 @@ public class NetworkManager : MonoBehaviour
     {
         m_socketIoComponent.On("connected",OnConnected);
         m_socketIoComponent.On("otherPlayerConnected",OnOtherPlayerConnected);
+        m_socketIoComponent.On("game start",OnGameStart);
     }
     void OnConnected(SocketIOEvent socketIOEvent)
     {
@@ -26,5 +27,9 @@ public class NetworkManager : MonoBehaviour
     {
         var data = socketIOEvent.data.ToString();
         GameCore.otherPlayerData = PlayerDataJson.CreateFromJson(data);
+    }
+    void OnGameStart(SocketIOEvent socketIOEvent)
+    {
+        GameCore.gamemanager.SetUp();
     }
 }

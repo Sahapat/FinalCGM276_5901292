@@ -24,6 +24,12 @@ io.on('connection', function (socket) {
             }
             socket.broadcast.emit('otherPlayerConnected', resLogin);
             socket.emit('connected', resLogin);
+
+            if(numPlayer >= 2)
+            {
+                socket.broadcast.emit('game start');
+                socket.emit('game start');
+            }
         }
     })
 })

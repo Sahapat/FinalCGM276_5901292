@@ -6,27 +6,30 @@ public class GameCore
     public static PlayerDataJson clientPlayerData = null;
     public static PlayerDataJson otherPlayerData = null;
     public static GameManager gamemanager = null;
+    public static UiManager uiManager = null;
 }
 public class GameManager : MonoBehaviour
 {
     [SerializeField]Character[] m_clients = null;
-
-    private int myClientIndex = 0;
     private bool isSetUp = false;
 
+    void Awake()
+    {
+        GameCore.gamemanager = this.GetComponent<GameManager>();
+        GameCore.uiManager = FindObjectOfType<UiManager>();
+    }
     void FixedUpdate()
     {
         if(isSetUp)
         {
             if(Input.GetMouseButtonDown(0))
             {
-                m_clients[myClientIndex].DoShoot(myClientIndex);
+                m_clients[GameCore.clientPlayerData.characterId].DoShoot(GameCore.clientPlayerData.characterId);
             }
         }
     }
-    public void SetUp(int clientIndex,string player1Name,string player2Name)
+    public void SetUp()
     {
-        this.myClientIndex = clientIndex;
-        isSetUp = true;
+        GameCore.uiManager.CloseLobby();
     }
 }
