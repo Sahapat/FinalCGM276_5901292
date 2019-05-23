@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
             var resLogin =
             {
                 name: data.name,
-                characterId: data.characterId
+                characterId: numPlayer-1
             }
             socket.broadcast.emit('otherPlayerConnected', resLogin);
             socket.emit('connected', resLogin);

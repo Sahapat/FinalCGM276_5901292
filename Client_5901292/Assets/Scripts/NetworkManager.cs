@@ -14,6 +14,7 @@ public class NetworkManager : MonoBehaviour
 
     void Start()
     {
+        m_socketIoComponent.On("login require",OnLoginRequire);
         m_socketIoComponent.On("connected",OnConnected);
         m_socketIoComponent.On("otherPlayerConnected",OnOtherPlayerConnected);
         m_socketIoComponent.On("game start",OnGameStart);
@@ -31,5 +32,9 @@ public class NetworkManager : MonoBehaviour
     void OnGameStart(SocketIOEvent socketIOEvent)
     {
         GameCore.gamemanager.SetUp();
+    }
+    void OnLoginRequire(SocketIOEvent socketIOEvent)
+    {
+        
     }
 }
