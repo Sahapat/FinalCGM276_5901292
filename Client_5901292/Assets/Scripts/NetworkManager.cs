@@ -5,7 +5,8 @@ using SocketIO;
 
 public class NetworkManager : MonoBehaviour
 {
-    public int lobbyindex = -1;
+    public bool isHost = false;
+    public int lobbyDataindex = -1;
 
     [SerializeField] SocketIOComponent m_socketIoComponent = null;
 
@@ -18,6 +19,7 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("update lobby list",OnUpdateLobbyList);
         m_socketIoComponent.On("joinable",OnJoinAble);
         m_socketIoComponent.On("not joinable",OnNotJoinAble);
+        m_socketIoComponent.On("sync lobby",OnSyncLobby);
     }
     public void CreateHost()
     {
@@ -43,7 +45,10 @@ public class NetworkManager : MonoBehaviour
     }
     void OnHostable(SocketIOEvent socketIOEvent)
     {
-        print("can host");
+        var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
+        this.lobbyDataindex = lobbyData.indexLobby;
+        this.isHost = true;
+        GameCore.uiManager.UpdateLobbyData(lobbyData,true);
     }
     void OnNotHostable(SocketIOEvent socketIOEvent)
     {
@@ -65,13 +70,21 @@ public class NetworkManager : MonoBehaviour
 
         GameCore.uiManager.UpdateLobbyListData(lobbyData);
     }
+    void OnSyncLobby(SocketIOEvent socketIOEvent)
+    {
+        var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
+        GameCore.uiManager.UpdateLobbyData(lobbyData,false);
+        print("sync");
+    }
     void OnJoinAble(SocketIOEvent socketIOEvent)
     {
         var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
+        this.isHost = false;
+        this.lobbyDataindex = lobbyData.indexLobby;
         GameCore.uiManager.CloseLobbyListSection();
         GameCore.uiManager.OpenLobbySection();
         GameCore.uiManager.UpdateLobbyData(lobbyData,true);
-        m_socketIoComponent.Emit("update lobby");
+        m_socketIoComponent.Emit("update lobby",new JSONObject(this.lobbyDataindex));
     }
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {

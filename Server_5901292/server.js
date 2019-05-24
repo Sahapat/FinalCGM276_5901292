@@ -32,7 +32,13 @@ io.on('connection', function (socket) {
             socket.join(lobbys[lobbyIndex]);
             playerInlobbys[lobbyIndex] = 1;
             lobbyHost[lobbyIndex] = socket.username;
-            socket.emit('hostable');
+            var resLobby =
+            {
+                hostName:lobbyHost[lobbyIndex],
+                indexLobby:lobbyIndex,
+                isReady:lobbyDatas[getLobbyDataByIndex(data,true)]
+            }
+            socket.emit('hostable',resLobby);
             var resLobbyList =
             {
                 hostNames: lobbyHost,
@@ -59,7 +65,7 @@ io.on('connection', function (socket) {
             {
                 hostName:lobbyHost[data],
                 indexLobby:data,
-                isReady:getLobbyDataByIndex(data,true)
+                isReady:lobbyDatas[getLobbyDataByIndex(data,true)]
             }
             socket.emit('joinable',resLobby);
             socket.leave(socket.lobby);
@@ -74,6 +80,14 @@ io.on('connection', function (socket) {
     socket.on('update lobby',function(data)
     {
         console.log(socket.username + "has join " + socket.lobby);
+        var resSync = 
+        {
+            hostName:socket.username,
+            indexLobby:data,
+            isReady:lobbyDatas[getLobbyDataByIndex(data,false)]
+        }
+        socket.broadcast.to(socket.lobby).emit('sync lobby',resSync);
+        socket.emit('sync lobby',resSync);
     })
 })
 function checkEmptyLobby() {
