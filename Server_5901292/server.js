@@ -94,12 +94,22 @@ io.on('connection', function (socket) {
         console.log(socket.username + " has "+ data.isReady);
         var isHost = (socket.username == lobbyHost[data.indexLobby]);
         lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
+        
+        var temp = 0;
+        if(data.isReady)
+        {
+            temp = 1;
+        }
+        else
+        {
+            temp = 0;
+        }
 
         var resBool = {
             isHost:isHost,
-            isReady:data.isReady
+            isReady:temp
         }
-        
+
         socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press',resBool);
     })
 })
