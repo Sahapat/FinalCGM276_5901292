@@ -45,6 +45,7 @@ public class NetworkManager : MonoBehaviour
     }
     void OnUpdateLobbyList(SocketIOEvent socketIOEvent)
     {
+        print("on update lobby list");
         var lobbyListData = LobbyListDataJson.CreateFromJson(socketIOEvent.data.ToString());
 
         LobbyData[] lobbyData = new LobbyData[lobbyListData.lobbyCap.Length];

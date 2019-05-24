@@ -37,7 +37,7 @@ io.on('connection', function (socket) {
                 hostNames: lobbyHost,
                 lobbyCap: playerInlobbys
             }
-            socket.broadcast.to(defualtLobby).emit('update lobby list', resLobbyList);
+            socket.broadcast.emit('update lobby list', resLobbyList);
             console.log(socket.username + " host at " + lobbys[lobbyIndex]);
         }
     })
