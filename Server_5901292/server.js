@@ -86,7 +86,7 @@ io.on('connection', function (socket) {
             indexLobby:data,
             isReady:lobbyDatas[getLobbyDataByIndex(data,false)]
         }
-        socket.broadcast.to(socket.lobby).emit('sync lobby',resSync);
+        socket.broadcast.to(lobbys[data]).emit('sync lobby',resSync);
         socket.emit('sync lobby',resSync);
     })
 })
