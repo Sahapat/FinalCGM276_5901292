@@ -25,7 +25,7 @@ public class WeaponRotater : MonoBehaviour
     [SerializeField] RotaterClamp rotaterClamp = RotaterClamp.Defualt;
     [SerializeField] float speed = 5f;
     [SerializeField] int direction = 1;
-    [SerializeField] bool isRotate = false;
+    bool isRotate = false;
 
     [SerializeField] LineRenderer laserShowing = null;
 
@@ -62,7 +62,7 @@ public class WeaponRotater : MonoBehaviour
     }
     public void StartRotate(float rotationZ)
     {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y,rotationZ);
+        transform.rotation = new Quaternion(transform.rotation.x,transform.rotation.y,rotationZ,transform.rotation.w);
         isRotate = true;
     }
     public void StopRotate()

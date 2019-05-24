@@ -23,6 +23,11 @@ public class Gun : MonoBehaviour
         weaponRotater.StartRotate();
         isGunEnable = true;
     }
+    public void EnableGun(float rotationZ)
+    {
+        weaponRotater.StartRotate(rotationZ);
+        isGunEnable = true;
+    }
     public void DisableGun()
     {
         weaponRotater.StopRotate();

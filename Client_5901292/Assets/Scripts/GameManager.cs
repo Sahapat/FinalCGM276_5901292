@@ -29,5 +29,9 @@ public class GameManager : MonoBehaviour
     }
     public void SetUp()
     {
+        foreach(var i in m_clients)
+        {
+            i.SetEnableGun();
+        }
     }
 }

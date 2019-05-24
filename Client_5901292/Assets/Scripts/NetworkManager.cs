@@ -108,7 +108,7 @@ public class NetworkManager : MonoBehaviour
     }
     void OnGameStart(SocketIOEvent socketIOEvent)
     {
-        
+        print("game start");
     }
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {

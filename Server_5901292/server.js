@@ -116,6 +116,11 @@ io.on('connection', function (socket) {
         {
             socket.emit('countdown');
             socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown');
+            setTimeout(function()
+            {
+                socket.emit('game start');
+                socket.broadcast.to(lobbys[data.indexLobby]).emit('game start');
+            },3000);
         }
     })
 })
