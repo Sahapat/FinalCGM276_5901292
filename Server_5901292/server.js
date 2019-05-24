@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
             {
                 hostName:lobbyHost[lobbyIndex],
                 indexLobby:lobbyIndex,
-                isReady:lobbyDatas[getLobbyDataByIndex(data,true)]
+                isReady:lobbyDatas[getLobbyDataByIndex(lobbyIndex,true)]
             }
             socket.emit('hostable',resLobby);
             var resLobbyList =

@@ -49,6 +49,7 @@ public class NetworkManager : MonoBehaviour
         this.lobbyDataindex = lobbyData.indexLobby;
         this.isHost = true;
         GameCore.uiManager.UpdateLobbyData(lobbyData,true);
+        print("in");
     }
     void OnNotHostable(SocketIOEvent socketIOEvent)
     {
