@@ -47,7 +47,13 @@ public class NetworkManager : MonoBehaviour
     {
         var lobbyListData = LobbyListDataJson.CreateFromJson(socketIOEvent.data.ToString());
 
-        print("finish unpack");
-        print($"{lobbyListData.lobbyCap[0]} lobby cap");
+        LobbyData[] lobbyData = new LobbyData[lobbyListData.lobbyCap.Length];
+
+        for(int i = 0;i<lobbyData.Length;i++)
+        {
+            lobbyData[i]= new LobbyData(lobbyListData.hostNames[i],lobbyListData.lobbyCap[i]);
+        }
+
+        GameCore.uiManager.UpdateLobbyListData(lobbyData);
     }
 }

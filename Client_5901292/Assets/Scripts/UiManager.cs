@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
             InGameSection();
         }
     }
-    public void UpdateLobbyListData(LobbyDataJson[] lobbyList)
+    public void UpdateLobbyListData(LobbyData[] lobbyList)
     {
         for (int i = 0; i < uiLobbys.Length; i++)
         {

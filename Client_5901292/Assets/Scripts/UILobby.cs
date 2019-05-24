@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class LobbyDataJson
+public class LobbyData
 {
     public string hostName;
     public int playerInLobby;
+
+    public LobbyData(string hostName,int playerInLobby)
+    {
+        this.hostName = hostName;
+        this.playerInLobby =playerInLobby;
+    }
 }
 public class UILobby : MonoBehaviour
 {
     [SerializeField]Text hostNameTxt = null;
     [SerializeField]Text playerInLobbyTxt = null;
     [SerializeField]Image LobbyBackground = null;
-    public void SetLobbyUiData(LobbyDataJson lobbyData)
+    public void SetLobbyUiData(LobbyData lobbyData)
     {
         if(lobbyData.playerInLobby == 0)
         {
