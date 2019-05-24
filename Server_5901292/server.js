@@ -89,6 +89,17 @@ io.on('connection', function (socket) {
         socket.broadcast.to(lobbys[data]).emit('sync lobby',resSync);
         socket.emit('sync lobby',resSync);
     })
+    socket.on('ready press',function(data)
+    {
+        console.log(socket.username + " has "+ data.isReady);
+        var resSync = 
+        {
+            hostName:data.hostName,
+            indexLobby:data.indexLobby,
+            isReady:data.isReady
+        }
+        socket.broadcast.to(lobbys[data.indexLobby]).emit('sync lobby',resSync);
+    })
 })
 function checkEmptyLobby() {
     for (var i = 0; i < 5; i++) {
