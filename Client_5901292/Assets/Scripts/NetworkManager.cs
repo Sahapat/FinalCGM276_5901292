@@ -22,6 +22,8 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("not joinable",OnNotJoinAble);
         m_socketIoComponent.On("sync lobby",OnSyncLobby);
         m_socketIoComponent.On("sync ready press",OnSyncReadyPress);
+        m_socketIoComponent.On("coutdown",OnCountDown);
+        m_socketIoComponent.On("game start",OnGameStart);
     }
     public void CreateHost()
     {
@@ -88,8 +90,7 @@ public class NetworkManager : MonoBehaviour
     void OnSyncReadyPress(SocketIOEvent socketIOEvent)
     {
         var readyCheck = ReadyCheckJson.CreateFromJson(socketIOEvent.data.ToString());
-
-        print($"isHost: {readyCheck.isHost} || isReady: {readyCheck.isReady}");
+        GameCore.uiManager.UpdateLobbyData(readyCheck.isHost,readyCheck.isReady);
     }
     void OnJoinAble(SocketIOEvent socketIOEvent)
     {
@@ -100,6 +101,14 @@ public class NetworkManager : MonoBehaviour
         GameCore.uiManager.OpenLobbySection();
         GameCore.uiManager.UpdateLobbyData(lobbyData,true);
         m_socketIoComponent.Emit("update lobby",new JSONObject(this.lobbyDataindex));
+    }
+    void OnCountDown(SocketIOEvent socketIOEvent)
+    {
+        GameCore.uiManager.ToGameScene();
+    }
+    void OnGameStart(SocketIOEvent socketIOEvent)
+    {
+        
     }
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {

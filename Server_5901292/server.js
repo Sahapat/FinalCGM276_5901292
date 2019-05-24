@@ -94,7 +94,7 @@ io.on('connection', function (socket) {
         console.log(socket.username + " has "+ data.isReady);
         var isHost = (socket.username == lobbyHost[data.indexLobby]);
         lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
-        
+
         var temp = 0;
         if(data.isReady)
         {
@@ -111,6 +111,12 @@ io.on('connection', function (socket) {
         }
 
         socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press',resBool);
+
+        if(checkReady(data.indexLobby))
+        {
+            socket.emit('coutdown');
+            socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown');
+        }
     })
 })
 function checkEmptyLobby() {
@@ -138,4 +144,11 @@ function getLobbyDataByIndex(index,isHost)
     {
         return index+(index+1);
     }
+}
+function checkReady(index)
+{
+    var p1 = lobbyDatas[getLobbyDataByIndex(index,true)];
+    var p2 = lobbyDatas[getLobbyDataByIndex(index,false)];
+
+    return p1 && p2;
 }

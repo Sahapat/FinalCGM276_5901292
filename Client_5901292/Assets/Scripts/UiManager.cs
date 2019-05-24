@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject player2Obj = null;
     [SerializeField] Text player2Txt = null;
     [SerializeField] Image ic_correctImg2 = null;
+    [SerializeField] Text countdownTxt = null;
+    [SerializeField] GameObject readyBtnObj = null;
+    [SerializeField] GameObject backBtnObj = null;
 
     [Header("Section Object")]
     [SerializeField] GameObject mainSectionObj = null;
@@ -32,6 +35,12 @@ public class UIManager : MonoBehaviour
             InMainSection();
         }
     }
+    public void ToGameScene()
+    {
+        readyBtnObj.SetActive(false);
+        backBtnObj.SetActive(false);
+        StartCoroutine(CountDownToGameScene());
+    }
     public void UpdateLobbyListData(LobbyData[] lobbyList)
     {
         for (int i = 0; i < uiLobbys.Length; i++)
@@ -39,9 +48,9 @@ public class UIManager : MonoBehaviour
             uiLobbys[i].SetLobbyUiData(lobbyList[i]);
         }
     }
-    public void UpdateLobbyData(LobbyDataJson lobbydata,bool isHost)
+    public void UpdateLobbyData(LobbyDataJson lobbydata, bool isHost)
     {
-        if(isHost)
+        if (isHost)
         {
             player1Obj.SetActive(true);
             player1Txt.text = lobbydata.hostName;
@@ -54,16 +63,24 @@ public class UIManager : MonoBehaviour
             ic_correctImg2.enabled = lobbydata.isReady;
         }
     }
-    public void UpdateLobbyData(bool isHost)
+    public void UpdateLobbyData(bool isHost, int isReady)
     {
-        if(isHost)
+        if (isHost)
         {
-            ic_correctImg1.enabled = !ic_correctImg1.enabled;
+            ic_correctImg1.enabled = (isReady == 1);
         }
         else
         {
-            ic_correctImg2.enabled = !ic_correctImg2.enabled;
+            ic_correctImg2.enabled = (isReady == 1);
         }
+    }
+    public void OpenGameSection()
+    {
+        gameSectionObj.SetActive(true);
+    }
+    public void CloseGameSection()
+    {
+        gameSectionObj.SetActive(false);
     }
     public void OpenLobbySection()
     {
@@ -97,5 +114,22 @@ public class UIManager : MonoBehaviour
     void InMainSection()
     {
         mainSection_PlayerName.text = MainMenu.inputString;
+    }
+    IEnumerator CountDownToGameScene()
+    {
+        countdownTxt.text = 3.ToString();
+        yield return new WaitForSeconds(1);
+        countdownTxt.text = 2.ToString();
+        yield return new WaitForSeconds(1);
+        countdownTxt.text = 1.ToString();
+        yield return new WaitForSeconds(1);
+
+        CloseLobbyListSection();
+        CloseLobbySection();
+        CloseMainSection();
+
+        OpenGameSection();
+
+        GameCore.gamemanager.SetUp();
     }
 }
