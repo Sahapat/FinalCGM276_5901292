@@ -120,7 +120,7 @@ io.on('connection', function (socket) {
             {
                 socket.emit('game start');
                 socket.broadcast.to(lobbys[data.indexLobby]).emit('game start');
-            },3000);
+            },6000);
         }
     })
 })
