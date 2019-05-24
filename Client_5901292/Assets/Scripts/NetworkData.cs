@@ -14,22 +14,19 @@ public class PlayerDataJson
         return JsonUtility.FromJson<PlayerDataJson>(data);
     }
 }
-
 [Serializable]
-public class LobbyDataJson
+public class LobbyListDataJson
 {
-    public string hostName;
-    public string roomData;
-    public int playerInLobby;
+    public string[] hostNames;
+    public int[] lobbyCap;
 
-    public LobbyDataJson(string hostName,string roomData,int playerInLobby)
+    public LobbyListDataJson(string[] hostNames,int[] lobbyCap)
     {
-        this.hostName= hostName;
-        this.roomData = roomData;
-        this.playerInLobby = playerInLobby;
+        this.hostNames = hostNames;
+        this.lobbyCap = lobbyCap;
     }
-    public static LobbyDataJson CreateFromJson(string data)
+    public static LobbyListDataJson CreateFromJson(string data)
     {
-        return JsonUtility.FromJson<LobbyDataJson>(data);
+        return JsonUtility.FromJson<LobbyListDataJson>(data);
     }
 }

@@ -45,10 +45,9 @@ public class NetworkManager : MonoBehaviour
     }
     void OnUpdateLobbyList(SocketIOEvent socketIOEvent)
     {
-        int[] temp = JsonUtility.FromJson<int[]>(socketIOEvent.data.ToString());
-        foreach(var i in temp)
-        {
-            print(i);
-        }
+        var lobbyListData = LobbyListDataJson.CreateFromJson(socketIOEvent.data.ToString());
+
+        print(lobbyListData.hostNames[0]);
+        print(lobbyListData.lobbyCap[0]);
     }
 }

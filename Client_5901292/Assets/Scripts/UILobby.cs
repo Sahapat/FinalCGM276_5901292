@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+public class LobbyDataJson
+{
+    public string hostName;
+    public int playerInLobby;
+}
 public class UILobby : MonoBehaviour
 {
     [SerializeField]Text hostNameTxt = null;
