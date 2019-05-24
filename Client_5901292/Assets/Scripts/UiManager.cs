@@ -54,6 +54,17 @@ public class UIManager : MonoBehaviour
             ic_correctImg2.enabled = lobbydata.isReady;
         }
     }
+    public void UpdateLobbyData(bool isHost)
+    {
+        if(isHost)
+        {
+            ic_correctImg1.enabled = !ic_correctImg1.enabled;
+        }
+        else
+        {
+            ic_correctImg2.enabled = !ic_correctImg2.enabled;
+        }
+    }
     public void OpenLobbySection()
     {
         lobbySectionObj.SetActive(true);
