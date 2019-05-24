@@ -96,8 +96,10 @@ io.on('connection', function (socket) {
         lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
 
         var resBool = {
-            checkHost:true
+            isHost:isHost,
+            isReady:data.isReady
         }
+        
         socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press',resBool);
     })
 })

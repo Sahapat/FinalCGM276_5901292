@@ -48,3 +48,15 @@ public class LobbyDataJson
         return JsonUtility.FromJson<LobbyDataJson>(data);
     }
 }
+
+[Serializable]
+public class ReadyCheckJson
+{
+    public bool isHost;
+    public bool isReady;
+
+    public static ReadyCheckJson CreateFromJson(string data)
+    {
+        return JsonUtility.FromJson<ReadyCheckJson>(data);
+    }
+}
