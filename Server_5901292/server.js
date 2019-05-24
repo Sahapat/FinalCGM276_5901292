@@ -92,13 +92,9 @@ io.on('connection', function (socket) {
     socket.on('ready press',function(data)
     {
         console.log(socket.username + " has "+ data.isReady);
-        var resSync = 
-        {
-            hostName:data.hostName,
-            indexLobby:data.indexLobby,
-            isReady:data.isReady
-        }
-        socket.broadcast.to(lobbys[data.indexLobby]).emit('sync lobby',resSync);
+        var isHost = (socket.username == lobbyHost[data.indexLobby]);
+        lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
+        socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press',isHost);
     })
 })
 function checkEmptyLobby() {

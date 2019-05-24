@@ -2381,7 +2381,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.81e-43, y: 1.1e-44, z: -2.0000007, w: 9.5e-44}
+  m_BoundingSphereOverride: {x: 0, y: 2.054e-42, z: 1e-45, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3175,7 +3175,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1071823014}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1411508029}
+        m_MethodName: Ready
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1071823014
@@ -3940,7 +3951,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b58a40784de89748a09711e588518d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyindex: -1
+  isHost: 0
+  lobbyDataindex: -1
   m_socketIoComponent: {fileID: 509447472}
 --- !u!4 &1411508030
 Transform:

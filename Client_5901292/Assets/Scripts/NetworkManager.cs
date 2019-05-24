@@ -88,8 +88,8 @@ public class NetworkManager : MonoBehaviour
     }
     void OnSyncReadyPress(SocketIOEvent socketIOEvent)
     {
-        var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
-        GameCore.uiManager.UpdateLobbyData(lobbyData,!this.isHost);
+        bool checkHost = JsonUtility.FromJson<bool>(socketIOEvent.data.ToString());
+        print(checkHost);
     }
     void OnJoinAble(SocketIOEvent socketIOEvent)
     {
