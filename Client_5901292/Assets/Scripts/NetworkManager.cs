@@ -22,7 +22,7 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("not joinable",OnNotJoinAble);
         m_socketIoComponent.On("sync lobby",OnSyncLobby);
         m_socketIoComponent.On("sync ready press",OnSyncReadyPress);
-        m_socketIoComponent.On("coutdown",OnCountDown);
+        m_socketIoComponent.On("countdown",OnCountDown);
         m_socketIoComponent.On("game start",OnGameStart);
     }
     public void CreateHost()

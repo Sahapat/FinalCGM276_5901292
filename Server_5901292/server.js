@@ -114,7 +114,7 @@ io.on('connection', function (socket) {
 
         if(checkReady(data.indexLobby))
         {
-            socket.emit('coutdown');
+            socket.emit('countdown');
             socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown');
         }
     })
