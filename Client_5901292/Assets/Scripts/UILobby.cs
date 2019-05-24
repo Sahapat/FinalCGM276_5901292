@@ -17,18 +17,18 @@ public class UILobby : MonoBehaviour
 {
     [SerializeField]Text hostNameTxt = null;
     [SerializeField]Text playerInLobbyTxt = null;
-    [SerializeField]Image LobbyBackground = null;
+    [SerializeField]GameObject LobbyBackground = null;
     public void SetLobbyUiData(LobbyData lobbyData)
     {
         if(lobbyData.playerInLobby == 0)
         {
-            LobbyBackground.enabled = false;
+            LobbyBackground.SetActive(false);
             hostNameTxt.enabled = false;
             playerInLobbyTxt.enabled = false;
         }
         else
         {
-            LobbyBackground.enabled = true;
+            LobbyBackground.SetActive(true);
             hostNameTxt.enabled = true;
             playerInLobbyTxt.enabled = true;
             hostNameTxt.text = lobbyData.hostName;

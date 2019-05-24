@@ -50,6 +50,20 @@ io.on('connection', function (socket) {
         socket.emit('update lobby list', resLobbyList);
         console.log("update lobby list");
     })
+    socket.on('join lobby', function(data)
+    {
+        if(playerInlobbys[data] <=1)
+        {
+            socket.emit('joinable');
+            socket.leave(socket.lobby);
+            socket.join(lobbys[data]);
+            playerInlobbys[data]+=1;
+        }
+        else
+        {
+            socket.emit('not joinable');
+        }
+    })
 })
 function checkEmptyLobby() {
     for (var i = 0; i < 5; i++) {

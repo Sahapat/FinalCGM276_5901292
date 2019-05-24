@@ -14,6 +14,8 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("hostable",OnHostable);
         m_socketIoComponent.On("not hostable",OnNotHostable);
         m_socketIoComponent.On("update lobby list",OnUpdateLobbyList);
+        m_socketIoComponent.On("joinable",OnJoinAble);
+        m_socketIoComponent.On("not joinable",OnNotJoinAble);
     }
     public void CreateHost()
     {
@@ -22,6 +24,10 @@ public class NetworkManager : MonoBehaviour
     public void GetLobbyList()
     {
         m_socketIoComponent.Emit("lobby list");
+    }
+    public void JoinLobby(int index)
+    {
+        m_socketIoComponent.Emit("join lobby",new JSONObject(index));
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
@@ -56,5 +62,14 @@ public class NetworkManager : MonoBehaviour
         }
 
         GameCore.uiManager.UpdateLobbyListData(lobbyData);
+    }
+    void OnJoinAble(SocketIOEvent socketIOEvent)
+    {
+        GameCore.uiManager.CloseLobbyListSection();
+        GameCore.uiManager.OpenLobbySection();
+    }
+    void OnNotJoinAble(SocketIOEvent socketIOEvent)
+    {
+        print("can't join");
     }
 }
