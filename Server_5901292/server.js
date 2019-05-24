@@ -92,7 +92,7 @@ io.on('connection', function (socket) {
     socket.on('ready press',function(data)
     {
         console.log(socket.username + " has "+ data.isReady);
-        var isHost = (socket.username != lobbyHost[data.indexLobby]);
+        var isHost = (socket.username == lobbyHost[data.indexLobby]);
         lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
 
         var resBool = {
