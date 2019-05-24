@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 var defualtLobby = 'main';
 var lobbys = ['lobby1', 'lobby2', 'lobby3', 'lobby4', 'lobby5'];
 var lobbyHost = ['empty', 'empty', 'empty', 'empty', 'empty'];
+var lobbyDatas = [false,false,false,false,false,false,false,false,false,false]
 var playerInlobbys = [0, 0, 0, 0, 0];
 
 server.listen(3000, function () {
@@ -54,7 +55,13 @@ io.on('connection', function (socket) {
     {
         if(playerInlobbys[data] <=1)
         {
-            socket.emit('joinable');
+            var resLobby =
+            {
+                hostName:lobbyHost[data],
+                indexLobby:data,
+                isReady:getLobbyDataByIndex(data,true)
+            }
+            socket.emit('joinable',resLobby);
             socket.leave(socket.lobby);
             socket.join(lobbys[data]);
             playerInlobbys[data]+=1;
@@ -64,6 +71,10 @@ io.on('connection', function (socket) {
             socket.emit('not joinable');
         }
     })
+    socket.on('update lobby',function(data)
+    {
+        console.log(socket.username + "has join " + socket.lobby);
+    })
 })
 function checkEmptyLobby() {
     for (var i = 0; i < 5; i++) {
@@ -72,4 +83,22 @@ function checkEmptyLobby() {
         }
     }
     return -1;
+}
+function getLobbyDataByIndex(index,isHost)
+{
+    if(isHost)
+    {
+        if(index == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return index+index;
+        }
+    }
+    else
+    {
+        return index+(index+1);
+    }
 }

@@ -14,8 +14,10 @@ public class UIManager : MonoBehaviour
     [Header("LobbySection")]
     [SerializeField] GameObject player1Obj = null;
     [SerializeField] Text player1Txt = null;
+    [SerializeField] Image ic_correctImg1 = null;
     [SerializeField] GameObject player2Obj = null;
     [SerializeField] Text player2Txt = null;
+    [SerializeField] Image ic_correctImg2 = null;
 
     [Header("Section Object")]
     [SerializeField] GameObject mainSectionObj = null;
@@ -29,21 +31,27 @@ public class UIManager : MonoBehaviour
         {
             InMainSection();
         }
-
-        if(lobbySectionObj.activeSelf)
-        {
-            InLobbySection();
-        }
-        if(gameSectionObj.activeSelf)
-        {
-            InGameSection();
-        }
     }
     public void UpdateLobbyListData(LobbyData[] lobbyList)
     {
         for (int i = 0; i < uiLobbys.Length; i++)
         {
             uiLobbys[i].SetLobbyUiData(lobbyList[i]);
+        }
+    }
+    public void UpdateLobbyData(LobbyDataJson lobbydata,bool isHost)
+    {
+        if(isHost)
+        {
+            player1Obj.SetActive(true);
+            player1Txt.text = lobbydata.hostName;
+            ic_correctImg1.enabled = lobbydata.isReady;
+        }
+        else
+        {
+            player2Obj.SetActive(true);
+            player2Txt.text = lobbydata.hostName;
+            ic_correctImg2.enabled = lobbydata.isReady;
         }
     }
     public void OpenLobbySection()
@@ -78,12 +86,5 @@ public class UIManager : MonoBehaviour
     void InMainSection()
     {
         mainSection_PlayerName.text = MainMenu.inputString;
-    }
-    void InLobbySection()
-    {
-    }
-    void InGameSection()
-    {
-
     }
 }

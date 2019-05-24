@@ -5,6 +5,8 @@ using SocketIO;
 
 public class NetworkManager : MonoBehaviour
 {
+    public int lobbyindex = -1;
+
     [SerializeField] SocketIOComponent m_socketIoComponent = null;
 
     void Start()
@@ -65,8 +67,11 @@ public class NetworkManager : MonoBehaviour
     }
     void OnJoinAble(SocketIOEvent socketIOEvent)
     {
+        var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
         GameCore.uiManager.CloseLobbyListSection();
         GameCore.uiManager.OpenLobbySection();
+        GameCore.uiManager.UpdateLobbyData(lobbyData,true);
+        m_socketIoComponent.Emit("update lobby");
     }
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {

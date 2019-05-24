@@ -30,3 +30,21 @@ public class LobbyListDataJson
         return JsonUtility.FromJson<LobbyListDataJson>(data);
     }
 }
+[Serializable]
+public class LobbyDataJson
+{
+    public string hostName;
+    public int indexLobby;
+    public bool isReady;
+    
+    public LobbyDataJson(string hostName,int indexLobby,bool isReady)
+    {
+        this.hostName = hostName;
+        this.indexLobby = indexLobby;
+        this.isReady = isReady;
+    }
+    public static LobbyDataJson CreateFromJson(string data)
+    {
+        return JsonUtility.FromJson<LobbyDataJson>(data);
+    }
+}
