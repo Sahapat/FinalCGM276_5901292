@@ -13,10 +13,15 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("connected",OnConnected);
         m_socketIoComponent.On("hostable",OnHostable);
         m_socketIoComponent.On("not hostable",OnNotHostable);
+        m_socketIoComponent.On("update lobby list",OnUpdateLobbyList);
     }
     public void CreateHost()
     {
         m_socketIoComponent.Emit("hosting");
+    }
+    public void GetLobbyList()
+    {
+        m_socketIoComponent.Emit("lobby list");
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
@@ -37,5 +42,13 @@ public class NetworkManager : MonoBehaviour
         GameCore.uiManager.CloseLobbySection();
         GameCore.uiManager.OpenMainSection();
         print("can't host");
+    }
+    void OnUpdateLobbyList(SocketIOEvent socketIOEvent)
+    {
+        int[] temp = JsonUtility.FromJson<int[]>(socketIOEvent.data.ToString());
+        foreach(var i in temp)
+        {
+            print(i);
+        }
     }
 }
