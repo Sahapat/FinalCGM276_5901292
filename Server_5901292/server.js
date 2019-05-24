@@ -47,6 +47,7 @@ io.on('connection', function (socket) {
             lobbyCap:playerInlobbys
         }
         socket.emit('update lobby list',resLobbyList);
+        console.log("update lobby list");
     })
 })
 function checkEmptyLobby()
