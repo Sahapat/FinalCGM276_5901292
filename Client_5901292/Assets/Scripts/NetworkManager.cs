@@ -47,7 +47,7 @@ public class NetworkManager : MonoBehaviour
     {
         var lobbyListData = LobbyListDataJson.CreateFromJson(socketIOEvent.data.ToString());
 
-        print(lobbyListData.hostNames[0]);
-        print(lobbyListData.lobbyCap[0]);
+        print("finish unpack");
+        print($"{lobbyListData.lobbyCap[0]} lobby cap");
     }
 }

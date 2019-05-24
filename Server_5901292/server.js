@@ -4,7 +4,7 @@ var io = require('socket.io')(server);
 
 var defualtLobby = 'main';
 var lobbys = ['lobby1','lobby2','lobby3','lobby4','lobby5'];
-var lobbyHost = ['none','none','none','none','none'];
+var lobbyHost = ['empty','empty','empty','empty','empty'];
 var playerInlobbys = [0,0,0,0,0];
 
 server.listen(3000, function () {
@@ -43,7 +43,7 @@ io.on('connection', function (socket) {
     {
         var resLobbyList = 
         {
-            hostName:lobbyHost,
+            hostNames:lobbyHost,
             lobbyCap:playerInlobbys
         }
         socket.emit('update lobby list',resLobbyList);
