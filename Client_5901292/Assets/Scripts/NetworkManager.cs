@@ -25,6 +25,7 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("sync ready press", OnSyncReadyPress);
         m_socketIoComponent.On("countdown", OnCountDown);
         m_socketIoComponent.On("game start", OnGameStart);
+        m_socketIoComponent.On("other firing",OnOtherFiring);
     }
     public void CreateHost()
     {
@@ -45,6 +46,12 @@ public class NetworkManager : MonoBehaviour
     public void JoinLobby(int index)
     {
         m_socketIoComponent.Emit("join lobby", new JSONObject(index));
+    }
+    public void Shoot(float rotationZ)
+    {
+        var shootData = new FiringJson(rotationZ,isHost,lobbyDataindex);
+        var reqShoot = JsonUtility.ToJson(shootData);
+        m_socketIoComponent.Emit("fire",new JSONObject(reqShoot));
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
@@ -117,5 +124,11 @@ public class NetworkManager : MonoBehaviour
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {
         print("can't join");
+    }
+    void OnOtherFiring(SocketIOEvent socketIOEvent)
+    {
+        var shootData = FiringJson.CreateFromJson(socketIOEvent.data.ToString());
+
+        GameCore.gamemanager.OthetShoot(shootData.isHost,shootData.rotationZ);
     }
 }

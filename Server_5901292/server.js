@@ -137,6 +137,17 @@ io.on('connection', function (socket) {
             }, 6000);
         }
     })
+    socket.on('fire',function(data)
+    {
+        var resToOther = 
+        {
+            rotationZ:data.rotationZ,
+            isHost:data.isHost,
+            lobbyIndex:data.lobbyIndex
+        }
+
+        socket.broadcast.to(lobbys[data.lobbyIndex]).emit('otherFiring',resToOther);
+    })
 })
 function checkEmptyLobby() {
     for (var i = 0; i < 5; i++) {

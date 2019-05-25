@@ -59,3 +59,37 @@ public class ReadyCheckJson
         return JsonUtility.FromJson<ReadyCheckJson>(data);
     }
 }
+
+[Serializable]
+public class FiringJson
+{
+    public float rotationZ;
+    public bool isHost;
+    public int lobbyIndex;
+    public FiringJson(float rotationZ,bool isHost,int lobbyIndex)
+    {
+        this.rotationZ = rotationZ;
+        this.isHost = isHost;
+        this.lobbyIndex = lobbyIndex;
+    }
+    public static FiringJson CreateFromJson(string data)
+    {
+        return JsonUtility.FromJson<FiringJson>(data);
+    }
+}
+
+[Serializable]
+public class WiningCheckJson
+{
+    public string name;
+    public int lobbyIndex;
+    public WiningCheckJson(string name,int lobbyIndex)
+    {
+        this.name = name;
+        this.lobbyIndex =lobbyIndex;
+    }
+    public static WiningCheckJson CreateFromJson(string data)
+    {
+        return JsonUtility.FromJson<WiningCheckJson>(data);
+    }
+}

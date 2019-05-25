@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private bool isSetUp = false;
     private bool controlable = false;
 
+    int numShoot = 0;
 
     void Awake()
     {
@@ -38,6 +39,20 @@ public class GameManager : MonoBehaviour
     {
         if (isSetUp)
         {
+            if(Input.GetMouseButtonDown(0) && controlable)
+            {
+                if(GameCore.networkManager.isHost)
+                {
+                    m_clients[0].DoShoot();
+                    numShoot += 1;
+                }
+            }
+            if(numShoot >= 2)
+            {
+                numShoot = 0;
+                controlable = false;
+                ChangeState();
+            }
         }
     }
     public void SetUp()
@@ -62,6 +77,23 @@ public class GameManager : MonoBehaviour
     {
         gamestart_show.text = "Game Start";
         Destroy(m_animator.gameObject, 0.5f);
+        controlable = true;
+        foreach(var i in m_clients)
+        {
+            i.SetEnableGun();
+        }
+    }
+    public void OthetShoot(bool isHost,float rotationZ)
+    {
+        if(isHost)
+        {
+            m_clients[0].DoShoot(rotationZ);
+        }
+        else
+        {
+            m_clients[1].DoShoot(rotationZ);
+        }
+        numShoot +=1;
     }
     void ChangeState()
     {
@@ -96,5 +128,6 @@ public class GameManager : MonoBehaviour
         {
             i.UpdateFacing();
         }
+        controlable = true;
     }
 }
