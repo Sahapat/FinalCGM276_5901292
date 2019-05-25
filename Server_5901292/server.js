@@ -159,6 +159,18 @@ io.on('connection', function (socket) {
         console.log("take damage "+data.isHost);
         socket.broadcast.to(lobbys[data.lobbyIndex]).emit('other take damage',resToOther);
     })
+    socket.on('sent winner',function(data)
+    {
+        var resToOther =
+        {
+            name:data.name,
+            isHost:data.isHost,
+            lobbyIndex:data.lobbyIndex
+        }
+        console.log("game end");
+        socket.emit('game end',resToOther);
+        socket.broadcast.to(lobbys[data.lobbyIndex]).emit('game end',resToOther);
+    })
 })
 function checkEmptyLobby() {
     for (var i = 0; i < 5; i++) {

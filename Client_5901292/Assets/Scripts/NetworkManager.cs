@@ -27,6 +27,7 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("game start", OnGameStart);
         m_socketIoComponent.On("other firing",OnOtherFiring);
         m_socketIoComponent.On("other take damage",OnOtherTakeDamage);
+        m_socketIoComponent.On("game end",OnGameEnd);
     }
     public void CreateHost()
     {
@@ -46,10 +47,16 @@ public class NetworkManager : MonoBehaviour
     }
     public void sendTakeDamage(int playerHealth)
     {
-        var sendTakeDamageJson = new HitJson(playerHealth,isHost,(byte)lobbyDataindex);
+        var sendTakeDamageJson = new HitJson(playerHealth,!isHost,(byte)lobbyDataindex);
         var reqTake = JsonUtility.ToJson(sendTakeDamageJson);
 
         m_socketIoComponent.Emit("take damage",new JSONObject(reqTake));
+    }
+    public void sendWinner()
+    {
+        var sendWinner = new WiningCheckJson(otherPlayerName,lobbyDataindex,isHost);
+        var reqWinner = JsonUtility.ToJson(sendWinner);
+        m_socketIoComponent.Emit("sent winner",new JSONObject(reqWinner));
     }
     public void JoinLobby(int index)
     {
@@ -143,6 +150,18 @@ public class NetworkManager : MonoBehaviour
     {
         var hitJson = HitJson.CreateFromJson(socketIOEvent.data.ToString());
 
-        print(hitJson.isHost);
+        if(hitJson.isHost)
+        {
+            GameCore.gamemanager.SetTakedamage(1,hitJson.currentHealth);
+        }
+        else
+        {
+            GameCore.gamemanager.SetTakedamage(0,hitJson.currentHealth);
+        }
+    }
+    void OnGameEnd(SocketIOEvent socketIOEvent)
+    {
+        var winnerRes = WiningCheckJson.CreateFromJson(socketIOEvent.data.ToString());
+        GameCore.gamemanager.GameEnd(winnerRes.name,winnerRes.isHost);
     }
 }

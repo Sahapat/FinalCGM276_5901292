@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 leftToRightChange = Vector3.zero;
     [SerializeField] Vector3 rightToLeftChange = Vector3.zero;
     [SerializeField] float jumpPower = 2f;
-
+    [Header("Game end ref")]
+    [SerializeField]UnityEngine.UI.Text winnerTxt = null;
     private bool isSetUp = false;
     private bool controlable = false;
 
@@ -71,6 +72,34 @@ public class GameManager : MonoBehaviour
                 Invoke("ChangeState",1f);
             }
         }
+    }
+    public void GameEnd(string name,bool isHost)
+    {
+        if(isHost)
+        {
+            Destroy(m_clients[0].gameObject);
+        }
+        else
+        {
+            Destroy(m_clients[1].gameObject);
+        }
+
+        GameCore.uiManager.CloseGameSection();
+        GameCore.uiManager.CloseLobbyListSection();
+        GameCore.uiManager.CloseLobbySection();
+        GameCore.uiManager.CloseMainSection();
+
+        GameCore.uiManager.OpenGameEnd();
+        winnerTxt.text = name;
+        isSetUp = false;
+    }
+    public void LoadScene(string name)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+    }
+    public void SetTakedamage(int index,int health)
+    {
+        m_clients[index].SetHealth(health);
     }
     public void SetUp()
     {
@@ -145,6 +174,7 @@ public class GameManager : MonoBehaviour
         {
             i.UpdateFacing();
             i.SetEnableGun();
+            i.GunFlip();
         }
         controlable = true;
     }

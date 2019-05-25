@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject lobbyListSectionObj = null;
     [SerializeField] GameObject lobbySectionObj = null;
     [SerializeField] GameObject gameSectionObj = null;
+    [SerializeField]GameObject gameEndSectionObj = null;
 
     void Update()
     {
@@ -73,6 +74,14 @@ public class UIManager : MonoBehaviour
         {
             ic_correctImg2.enabled = (isReady == 1);
         }
+    }
+    public void OpenGameEnd()
+    {
+        gameEndSectionObj.SetActive(true);
+    }
+    public void CloseGameEnd()
+    {
+        gameEndSectionObj.SetActive(false);
     }
     public void OpenGameSection()
     {

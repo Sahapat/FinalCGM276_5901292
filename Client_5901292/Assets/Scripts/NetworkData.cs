@@ -100,10 +100,12 @@ public class HitJson
 public class WiningCheckJson
 {
     public string name;
+    public bool isHost;
     public int lobbyIndex;
-    public WiningCheckJson(string name,int lobbyIndex)
+    public WiningCheckJson(string name,int lobbyIndex,bool isHost)
     {
         this.name = name;
+        this.isHost = isHost;
         this.lobbyIndex =lobbyIndex;
     }
     public static WiningCheckJson CreateFromJson(string data)

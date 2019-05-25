@@ -29,10 +29,29 @@ public class Character : MonoBehaviour
     {
         gun.EnableGun();
     }
+    public void GunFlip()
+    {
+        if(facingLeft)
+        {
+            gun.SetFlip(-1);
+        }
+        else
+        {
+            gun.SetFlip(1);
+        }
+    }
     public void TakeDamage(int Damage)
     {
         characterHealth.HP -= Damage;
         GameCore.networkManager.sendTakeDamage(characterHealth.HP);
+        if(characterHealth.HP <= 0)
+        {
+            GameCore.networkManager.sendWinner();
+        }
+    }
+    public void SetHealth(int health)
+    {
+        characterHealth.HP = health;
     }
     public void UpdateHP(int current)
     {

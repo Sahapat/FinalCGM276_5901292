@@ -58,6 +58,7 @@ public class WeaponRotater : MonoBehaviour
             }
             transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
             counterTime += Time.deltaTime;
+            laserShowing.enabled = true;
         }
         else
         {
@@ -76,5 +77,9 @@ public class WeaponRotater : MonoBehaviour
     public void StopRotate()
     {
         isRotate = false;
+    }
+    public void SetFlip(int direction)
+    {
+        this.direction = direction;
     }
 }
