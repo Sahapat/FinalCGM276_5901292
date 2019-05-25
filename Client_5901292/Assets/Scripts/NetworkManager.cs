@@ -7,6 +7,7 @@ public class NetworkManager : MonoBehaviour
 {
     public bool isHost = false;
     public int lobbyDataindex = -1;
+    public string otherPlayerName = string.Empty;
 
     [SerializeField] SocketIOComponent m_socketIoComponent = null;
 
@@ -85,6 +86,10 @@ public class NetworkManager : MonoBehaviour
     void OnSyncLobby(SocketIOEvent socketIOEvent)
     {
         var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
+        if(lobbyData.hostName != MainMenu.inputString)
+        {
+            otherPlayerName = lobbyData.hostName;
+        }
         GameCore.uiManager.UpdateLobbyData(lobbyData,false);
     }
     void OnSyncReadyPress(SocketIOEvent socketIOEvent)
@@ -108,7 +113,7 @@ public class NetworkManager : MonoBehaviour
     }
     void OnGameStart(SocketIOEvent socketIOEvent)
     {
-        print("game start");
+        GameCore.gamemanager.GameStart();
     }
     void OnNotJoinAble(SocketIOEvent socketIOEvent)
     {

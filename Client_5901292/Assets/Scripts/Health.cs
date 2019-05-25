@@ -22,7 +22,7 @@ public class Health
         }
     }
 
-    private int maxHealth = 0;
+    public int maxHealth {get;private set;}
     public Health(int maxHealth)
     {
         this.maxHealth = maxHealth;

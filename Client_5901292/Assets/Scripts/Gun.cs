@@ -23,20 +23,15 @@ public class Gun : MonoBehaviour
         weaponRotater.StartRotate();
         isGunEnable = true;
     }
-    public void EnableGun(float rotationZ)
-    {
-        weaponRotater.StartRotate(rotationZ);
-        isGunEnable = true;
-    }
     public void DisableGun()
     {
         weaponRotater.StopRotate();
         isGunEnable = false;
     }
-    public void Shoot()
+    public void Shoot(float z)
     {
         if(!isGunEnable)return;
-
+        weaponRotater.SetRotation(z);
         var bullet = Instantiate(bulletObj,shootPosition.position,shootPosition.rotation);
         GunParticle.Play();
         DisableGun();

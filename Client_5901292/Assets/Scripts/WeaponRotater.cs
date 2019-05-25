@@ -25,7 +25,7 @@ public class WeaponRotater : MonoBehaviour
     [SerializeField] RotaterClamp rotaterClamp = RotaterClamp.Defualt;
     [SerializeField] float speed = 5f;
     [SerializeField] int direction = 1;
-    bool isRotate = false;
+    [SerializeField]bool isRotate = false;
 
     [SerializeField] LineRenderer laserShowing = null;
 
@@ -56,13 +56,13 @@ public class WeaponRotater : MonoBehaviour
             laserShowing.enabled = false;
         }
     }
+    public void SetRotation(float z)
+    {
+        transform.rotation = new Quaternion(transform.rotation.x,transform.rotation.y,z,transform.rotation.w);
+    }
     public void StartRotate()
     {
-        isRotate = true;
-    }
-    public void StartRotate(float rotationZ)
-    {
-        transform.rotation = new Quaternion(transform.rotation.x,transform.rotation.y,rotationZ,transform.rotation.w);
+        transform.localRotation = Quaternion.identity;
         isRotate = true;
     }
     public void StopRotate()
