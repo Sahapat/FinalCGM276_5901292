@@ -45,6 +45,7 @@ public class Character : MonoBehaviour
         characterHealth.OnHPChanged += UpdateHP;
         textObj.GetComponent<Renderer>().sortingLayerName = "UI";
         UpdateHP(characterHealth.HP);
+        UpdateFacing();
     }
     public void UpdateFacing()
     {

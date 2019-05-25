@@ -14,17 +14,17 @@ public class NetworkManager : MonoBehaviour
     bool isReady = false;
     void Start()
     {
-        m_socketIoComponent.On("connect",OnConnect);
-        m_socketIoComponent.On("connected",OnConnected);
-        m_socketIoComponent.On("hostable",OnHostable);
-        m_socketIoComponent.On("not hostable",OnNotHostable);
-        m_socketIoComponent.On("update lobby list",OnUpdateLobbyList);
-        m_socketIoComponent.On("joinable",OnJoinAble);
-        m_socketIoComponent.On("not joinable",OnNotJoinAble);
-        m_socketIoComponent.On("sync lobby",OnSyncLobby);
-        m_socketIoComponent.On("sync ready press",OnSyncReadyPress);
-        m_socketIoComponent.On("countdown",OnCountDown);
-        m_socketIoComponent.On("game start",OnGameStart);
+        m_socketIoComponent.On("connect", OnConnect);
+        m_socketIoComponent.On("connected", OnConnected);
+        m_socketIoComponent.On("hostable", OnHostable);
+        m_socketIoComponent.On("not hostable", OnNotHostable);
+        m_socketIoComponent.On("update lobby list", OnUpdateLobbyList);
+        m_socketIoComponent.On("joinable", OnJoinAble);
+        m_socketIoComponent.On("not joinable", OnNotJoinAble);
+        m_socketIoComponent.On("sync lobby", OnSyncLobby);
+        m_socketIoComponent.On("sync ready press", OnSyncReadyPress);
+        m_socketIoComponent.On("countdown", OnCountDown);
+        m_socketIoComponent.On("game start", OnGameStart);
     }
     public void CreateHost()
     {
@@ -37,19 +37,19 @@ public class NetworkManager : MonoBehaviour
     public void Ready()
     {
         isReady = !isReady;
-        var updateLobbydata = new LobbyDataJson(MainMenu.inputString,0,isReady);
+        var updateLobbydata = new LobbyDataJson(MainMenu.inputString, 0, isReady);
         var reqUpdateLobbydata = JsonUtility.ToJson(updateLobbydata);
-        m_socketIoComponent.Emit("ready press",new JSONObject(reqUpdateLobbydata));
-        GameCore.uiManager.UpdateLobbyData(updateLobbydata,isHost);
+        m_socketIoComponent.Emit("ready press", new JSONObject(reqUpdateLobbydata));
+        GameCore.uiManager.UpdateLobbyData(updateLobbydata, isHost);
     }
     public void JoinLobby(int index)
     {
-        m_socketIoComponent.Emit("join lobby",new JSONObject(index));
+        m_socketIoComponent.Emit("join lobby", new JSONObject(index));
     }
     void OnConnect(SocketIOEvent socketIOEvent)
     {
         string data = JsonUtility.ToJson(new PlayerDataJson(MainMenu.inputString));
-        m_socketIoComponent.Emit("login",new JSONObject(data));
+        m_socketIoComponent.Emit("login", new JSONObject(data));
     }
     void OnConnected(SocketIOEvent socketIOEvent)
     {
@@ -61,7 +61,7 @@ public class NetworkManager : MonoBehaviour
         var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
         this.lobbyDataindex = lobbyData.indexLobby;
         this.isHost = true;
-        GameCore.uiManager.UpdateLobbyData(lobbyData,true);
+        GameCore.uiManager.UpdateLobbyData(lobbyData, true);
     }
     void OnNotHostable(SocketIOEvent socketIOEvent)
     {
@@ -76,9 +76,9 @@ public class NetworkManager : MonoBehaviour
 
         LobbyData[] lobbyData = new LobbyData[lobbyListData.lobbyCap.Length];
 
-        for(int i = 0;i<lobbyData.Length;i++)
+        for (int i = 0; i < lobbyData.Length; i++)
         {
-            lobbyData[i]= new LobbyData(lobbyListData.hostNames[i],lobbyListData.lobbyCap[i]);
+            lobbyData[i] = new LobbyData(lobbyListData.hostNames[i], lobbyListData.lobbyCap[i]);
         }
 
         GameCore.uiManager.UpdateLobbyListData(lobbyData);
@@ -86,16 +86,12 @@ public class NetworkManager : MonoBehaviour
     void OnSyncLobby(SocketIOEvent socketIOEvent)
     {
         var lobbyData = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
-        if(lobbyData.hostName != MainMenu.inputString)
-        {
-            otherPlayerName = lobbyData.hostName;
-        }
-        GameCore.uiManager.UpdateLobbyData(lobbyData,false);
+        GameCore.uiManager.UpdateLobbyData(lobbyData, false);
     }
     void OnSyncReadyPress(SocketIOEvent socketIOEvent)
     {
         var readyCheck = ReadyCheckJson.CreateFromJson(socketIOEvent.data.ToString());
-        GameCore.uiManager.UpdateLobbyData(readyCheck.isHost,readyCheck.isReady);
+        GameCore.uiManager.UpdateLobbyData(readyCheck.isHost, readyCheck.isReady);
     }
     void OnJoinAble(SocketIOEvent socketIOEvent)
     {
@@ -104,12 +100,15 @@ public class NetworkManager : MonoBehaviour
         this.lobbyDataindex = lobbyData.indexLobby;
         GameCore.uiManager.CloseLobbyListSection();
         GameCore.uiManager.OpenLobbySection();
-        GameCore.uiManager.UpdateLobbyData(lobbyData,true);
-        m_socketIoComponent.Emit("update lobby",new JSONObject(this.lobbyDataindex));
+        GameCore.uiManager.UpdateLobbyData(lobbyData, true);
+        m_socketIoComponent.Emit("update lobby", new JSONObject(this.lobbyDataindex));
     }
     void OnCountDown(SocketIOEvent socketIOEvent)
     {
+        var resName = LobbyDataJson.CreateFromJson(socketIOEvent.data.ToString());
+        otherPlayerName = resName.hostName;
         GameCore.uiManager.ToGameScene();
+        GameCore.gamemanager.SetUp();
     }
     void OnGameStart(SocketIOEvent socketIOEvent)
     {

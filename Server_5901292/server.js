@@ -5,7 +5,8 @@ var io = require('socket.io')(server);
 var defualtLobby = 'main';
 var lobbys = ['lobby1', 'lobby2', 'lobby3', 'lobby4', 'lobby5'];
 var lobbyHost = ['empty', 'empty', 'empty', 'empty', 'empty'];
-var lobbyDatas = [false,false,false,false,false,false,false,false,false,false]
+var lobbyClient = ['empty', 'empty', 'empty', 'empty', 'empty'];
+var lobbyDatas = [false, false, false, false, false, false, false, false, false, false]
 var playerInlobbys = [0, 0, 0, 0, 0];
 
 server.listen(3000, function () {
@@ -34,11 +35,11 @@ io.on('connection', function (socket) {
             lobbyHost[lobbyIndex] = socket.username;
             var resLobby =
             {
-                hostName:lobbyHost[lobbyIndex],
-                indexLobby:lobbyIndex,
-                isReady:lobbyDatas[getLobbyDataByIndex(lobbyIndex,true)]
+                hostName: lobbyHost[lobbyIndex],
+                indexLobby: lobbyIndex,
+                isReady: lobbyDatas[getLobbyDataByIndex(lobbyIndex, true)]
             }
-            socket.emit('hostable',resLobby);
+            socket.emit('hostable', resLobby);
             var resLobbyList =
             {
                 hostNames: lobbyHost,
@@ -57,70 +58,83 @@ io.on('connection', function (socket) {
         socket.emit('update lobby list', resLobbyList);
         console.log("update lobby list");
     })
-    socket.on('join lobby', function(data)
-    {
-        if(playerInlobbys[data] <=1)
-        {
+    socket.on('join lobby', function (data) {
+        if (playerInlobbys[data] <= 1) {
             var resLobby =
             {
-                hostName:lobbyHost[data],
-                indexLobby:data,
-                isReady:lobbyDatas[getLobbyDataByIndex(data,true)]
+                hostName: lobbyHost[data],
+                indexLobby: data,
+                isReady: lobbyDatas[getLobbyDataByIndex(data, true)]
             }
-            socket.emit('joinable',resLobby);
+            socket.emit('joinable', resLobby);
             socket.leave(socket.lobby);
             socket.join(lobbys[data]);
-            playerInlobbys[data]+=1;
+            playerInlobbys[data] += 1;
+            lobbyClient[data] = socket.username;
         }
-        else
-        {
+        else {
             socket.emit('not joinable');
         }
     })
-    socket.on('update lobby',function(data)
-    {
+    socket.on('update lobby', function (data) {
         console.log(socket.username + "has join " + socket.lobby);
-        var resSync = 
+        var resSync =
         {
-            hostName:socket.username,
-            indexLobby:data,
-            isReady:lobbyDatas[getLobbyDataByIndex(data,false)]
+            hostName: socket.username,
+            indexLobby: data,
+            isReady: lobbyDatas[getLobbyDataByIndex(data, false)]
         }
-        socket.broadcast.to(lobbys[data]).emit('sync lobby',resSync);
-        socket.emit('sync lobby',resSync);
+        socket.broadcast.to(lobbys[data]).emit('sync lobby', resSync);
+        socket.emit('sync lobby', resSync);
     })
-    socket.on('ready press',function(data)
-    {
-        console.log(socket.username + " has "+ data.isReady);
+    socket.on('ready press', function (data) {
+        console.log(socket.username + " has " + data.isReady);
         var isHost = (socket.username == lobbyHost[data.indexLobby]);
-        lobbyDatas[getLobbyDataByIndex(data.indexLobby,isHost)] = data.isReady;
+        lobbyDatas[getLobbyDataByIndex(data.indexLobby, isHost)] = data.isReady;
 
         var temp = 0;
-        if(data.isReady)
-        {
+        if (data.isReady) {
             temp = 1;
         }
-        else
-        {
+        else {
             temp = 0;
         }
 
         var resBool = {
-            isHost:isHost,
-            isReady:temp
+            isHost: isHost,
+            isReady: temp
         }
 
-        socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press',resBool);
+        socket.broadcast.to(lobbys[data.indexLobby]).emit('sync ready press', resBool);
 
-        if(checkReady(data.indexLobby))
-        {
+        if (checkReady(data.indexLobby)) {
+            var resToClient =
+                {
+                    hostName: lobbyHost[data.indexLobby],
+                    indexLobby: -1,
+                    isReady: false
+                }
+                var resToHost =
+                {
+                    hostName:lobbyClient[data.indexLobby],
+                    indexLobby:-1,
+                    isReady:false
+                }
+            if (isHost) {
+                socket.emit('countdown',resToHost);
+                socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown',resToClient);
+            }
+            else
+            {
+                socket.emit('countdown',resToClient);
+                socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown',resToHost);
+            }
             socket.emit('countdown');
             socket.broadcast.to(lobbys[data.indexLobby]).emit('countdown');
-            setTimeout(function()
-            {
+            setTimeout(function () {
                 socket.emit('game start');
                 socket.broadcast.to(lobbys[data.indexLobby]).emit('game start');
-            },6000);
+            }, 6000);
         }
     })
 })
@@ -132,28 +146,22 @@ function checkEmptyLobby() {
     }
     return -1;
 }
-function getLobbyDataByIndex(index,isHost)
-{
-    if(isHost)
-    {
-        if(index == 0)
-        {
+function getLobbyDataByIndex(index, isHost) {
+    if (isHost) {
+        if (index == 0) {
             return 0;
         }
-        else
-        {
-            return index+index;
+        else {
+            return index + index;
         }
     }
-    else
-    {
-        return index+(index+1);
+    else {
+        return index + (index + 1);
     }
 }
-function checkReady(index)
-{
-    var p1 = lobbyDatas[getLobbyDataByIndex(index,true)];
-    var p2 = lobbyDatas[getLobbyDataByIndex(index,false)];
+function checkReady(index) {
+    var p1 = lobbyDatas[getLobbyDataByIndex(index, true)];
+    var p2 = lobbyDatas[getLobbyDataByIndex(index, false)];
 
     return p1 && p2;
 }
