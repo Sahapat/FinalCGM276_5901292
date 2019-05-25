@@ -30,10 +30,6 @@ public class WeaponRotater : MonoBehaviour
     [SerializeField] LineRenderer laserShowing = null;
 
     float counterTime = 0;
-    void Start()
-    {
-        SetFlip();
-    }
     void FixedUpdate()
     {
         if (isRotate)
@@ -86,13 +82,13 @@ public class WeaponRotater : MonoBehaviour
     }
     public void SetFlip()
     {
-        if(this.transform.root.lossyScale.z < 0 )
+        if(this.transform.root.gameObject.name == "Player1")
         {
-            direction = -1;
+            direction = 1;
         }
         else
         {
-            direction = 1;
+            direction = -1;
         }
         counterTime = 0;
     }

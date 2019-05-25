@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform shootPosition = null;
     [SerializeField] ParticleSystem GunParticle = null;
     [SerializeField] Transform[] direction = null;
-
+    [SerializeField] AudioSource audisource = null;
     private WeaponRotater weaponRotater = null;
 
     private bool isGunEnable = false;
@@ -50,6 +50,7 @@ public class Gun : MonoBehaviour
         GunParticle.Play();
         DisableGun();
         GameCore.gamemanager.numShoot+=1;
+        audisource.Play();
     }
     public void Shoot(LayerMask mask)
     {
@@ -70,5 +71,6 @@ public class Gun : MonoBehaviour
         DisableGun();
         GameCore.gamemanager.numShoot+=1;
         GameCore.networkManager.Shoot(this.transform.rotation.z);
+        audisource.Play();
     }
 }

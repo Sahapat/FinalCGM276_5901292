@@ -25,9 +25,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] float jumpPower = 2f;
     [Header("Game end ref")]
     [SerializeField] UnityEngine.UI.Text winnerTxt = null;
+
+    [SerializeField]AudioSource m_audiosource = null;
+    [SerializeField]AudioSource other = null;
+    [SerializeField]AudioSource other2 = null;
+    [SerializeField] AudioClip[] clip = null;
     private bool isSetUp = false;
     private bool controlable = false;
-
+    public int round = 0;
     public int numShoot = 0;
 
     void Awake()
@@ -35,6 +40,12 @@ public class GameManager : MonoBehaviour
         GameCore.gamemanager = this.GetComponent<GameManager>();
         GameCore.uiManager = FindObjectOfType<UIManager>();
         GameCore.networkManager = FindObjectOfType<NetworkManager>();
+    }
+    void Start()
+    {
+        m_audiosource.clip = clip[0];
+        m_audiosource.loop = true;
+        m_audiosource.Play();
     }
     void FixedUpdate()
     {
@@ -73,6 +84,10 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void PlayBulletHit()
+    {
+        other2.Play();
+    }
     public void GameEnd(string name, bool isHost)
     {
         if (isHost)
@@ -92,6 +107,8 @@ public class GameManager : MonoBehaviour
         GameCore.uiManager.OpenGameEnd();
         winnerTxt.text = name;
         isSetUp = false;
+        m_audiosource.loop = false;
+        m_audiosource.PlayOneShot(clip[2]);
     }
     public void LoadScene(string name)
     {
@@ -117,7 +134,14 @@ public class GameManager : MonoBehaviour
             m_clients[1].SetUp(MainMenu.inputString);
             m_clients[0].SetUp(GameCore.networkManager.otherPlayerName);
         }
+        m_clients[0].UpdateFacing();
+        m_clients[1].UpdateFacing();
         isSetUp = true;
+        m_clients[0].GunFlip();
+        m_clients[1].GunFlip();
+        m_audiosource.clip = clip[1];
+        m_audiosource.loop = true;
+        m_audiosource.Play();
     }
     public void GameStart()
     {
@@ -169,6 +193,8 @@ public class GameManager : MonoBehaviour
 
                 Invoke("FinishStateChange", changeStateDuration);
             }
+            other.PlayOneShot(clip[3]);
+            round++;
         }
         catch (System.NullReferenceException)
         {
