@@ -77,6 +77,24 @@ public class FiringJson
         return JsonUtility.FromJson<FiringJson>(data);
     }
 }
+[Serializable]
+public class HitJson
+{
+    public int currentHealth;
+    public bool isHost;
+    public byte lobbyIndex;
+
+    public HitJson(int currentHealth,bool isHost,byte lobbyIndex)
+    {
+        this.currentHealth = currentHealth;
+        this.isHost = isHost;
+        this.lobbyIndex = lobbyIndex;
+    }
+    public static HitJson CreateFromJson(string data)
+    {
+        return JsonUtility.FromJson<HitJson>(data);
+    }
+}
 
 [Serializable]
 public class WiningCheckJson

@@ -309,6 +309,9 @@ MonoBehaviour:
     type: 3}
   shootPosition: {fileID: 8220124766596266962}
   GunParticle: {fileID: 8325027151688614611}
+  direction:
+  - {fileID: 8220124766935005880}
+  - {fileID: 8220124766459371159}
 --- !u!114 &8220124766494322922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +330,7 @@ MonoBehaviour:
     MinAngle: 50
   speed: 30
   direction: 1
+  isRotate: 0
   laserShowing: {fileID: 8220124765426116590}
 --- !u!1 &8220124766596266963
 GameObject:

@@ -25,15 +25,16 @@ public class WeaponRotater : MonoBehaviour
     [SerializeField] RotaterClamp rotaterClamp = RotaterClamp.Defualt;
     [SerializeField] float speed = 5f;
     [SerializeField] int direction = 1;
-    [SerializeField]bool isRotate = false;
-
+    [SerializeField] bool isRotate = false;
+    [SerializeField] float time = 2f;
     [SerializeField] LineRenderer laserShowing = null;
 
+    float counterTime = 0;
     void FixedUpdate()
     {
         if (isRotate)
         {
-            transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
+            /* transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
             if (direction > 0)
             {
                 if (transform.eulerAngles.z < 300 && transform.eulerAngles.z > rotaterClamp.MinAngle)
@@ -49,7 +50,14 @@ public class WeaponRotater : MonoBehaviour
                 }
             }
             currentAngle = transform.eulerAngles.z;
-            laserShowing.enabled = true;
+            laserShowing.enabled = true; */
+            if(counterTime >= time)
+            {
+                direction *= (-1);
+                counterTime = 0;
+            }
+            transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
+            counterTime += Time.deltaTime;
         }
         else
         {
@@ -58,11 +66,11 @@ public class WeaponRotater : MonoBehaviour
     }
     public void SetRotation(float z)
     {
-        transform.rotation = new Quaternion(transform.rotation.x,transform.rotation.y,z,transform.rotation.w);
+        transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, z, transform.rotation.w);
     }
     public void StartRotate()
     {
-        transform.localRotation = Quaternion.identity;
+        transform.rotation = Quaternion.identity;
         isRotate = true;
     }
     public void StopRotate()

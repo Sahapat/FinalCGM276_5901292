@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
             }
             else if (Input.touches.Length > 0)
             {
-                if (Input.touches[0].phase == TouchPhase.Began)
+                if (Input.touches[0].phase == TouchPhase.Began && controlable)
                 {
                     if (GameCore.networkManager.isHost)
                     {
@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            if (numShoot >= 2)
+            if(numShoot >= 2)
             {
                 numShoot = 0;
                 controlable = false;
-                ChangeState();
+                Invoke("ChangeState",1f);
             }
         }
     }
@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
         {
             var endValueToLeft = new Vector3(rightToLeftChange.x, m_clients[0].transform.position.y + rightToLeftChange.y, m_clients[0].transform.position.z);
             m_clients[0].transform.DOJump(endValueToLeft, jumpPower, 1, changeStateDuration);
+            m_clients[0].facingLeft = true;
 
             var endValueToRight = new Vector3(leftToRightChange.x, m_clients[1].transform.position.y + leftToRightChange.y, m_clients[1].transform.position.z);
             m_clients[1].transform.DOJump(endValueToRight, jumpPower, 1, changeStateDuration);
@@ -143,6 +144,7 @@ public class GameManager : MonoBehaviour
         foreach (var i in m_clients)
         {
             i.UpdateFacing();
+            i.SetEnableGun();
         }
         controlable = true;
     }

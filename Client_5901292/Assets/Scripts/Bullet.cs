@@ -11,13 +11,19 @@ public class Bullet : MonoBehaviour
     [SerializeField] GameObject woodParticle = null;
     [SerializeField] GameObject metalParticle = null;
     [SerializeField] GameObject dirtParticle = null;
+    Vector2 direction = Vector3.zero;
+
+    public void SetDirection(Vector2 direction)
+    {
+        this.direction = direction;
+    }
     void Start()
     {
         Destroy(this.gameObject,5f);
     }
     void FixedUpdate()
     {
-        transform.Translate(transform.right * bulletSpeed * Time.deltaTime, Space.World);
+        transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
     }
     void OnTriggerEnter2D(Collider2D other)
     {

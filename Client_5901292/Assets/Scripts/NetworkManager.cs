@@ -26,6 +26,7 @@ public class NetworkManager : MonoBehaviour
         m_socketIoComponent.On("countdown", OnCountDown);
         m_socketIoComponent.On("game start", OnGameStart);
         m_socketIoComponent.On("other firing",OnOtherFiring);
+        m_socketIoComponent.On("other take damage",OnOtherTakeDamage);
     }
     public void CreateHost()
     {
@@ -42,6 +43,13 @@ public class NetworkManager : MonoBehaviour
         var reqUpdateLobbydata = JsonUtility.ToJson(updateLobbydata);
         m_socketIoComponent.Emit("ready press", new JSONObject(reqUpdateLobbydata));
         GameCore.uiManager.UpdateLobbyData(updateLobbydata, isHost);
+    }
+    public void sendTakeDamage(int playerHealth)
+    {
+        var sendTakeDamageJson = new HitJson(playerHealth,isHost,(byte)lobbyDataindex);
+        var reqTake = JsonUtility.ToJson(sendTakeDamageJson);
+
+        m_socketIoComponent.Emit("take damage",new JSONObject(reqTake));
     }
     public void JoinLobby(int index)
     {
@@ -127,9 +135,14 @@ public class NetworkManager : MonoBehaviour
     }
     void OnOtherFiring(SocketIOEvent socketIOEvent)
     {
-        print("in");
         var shootData = FiringJson.CreateFromJson(socketIOEvent.data.ToString());
 
         GameCore.gamemanager.OthetShoot(shootData.isHost,shootData.rotationZ);
+    }
+    void OnOtherTakeDamage(SocketIOEvent socketIOEvent)
+    {
+        var hitJson = HitJson.CreateFromJson(socketIOEvent.data.ToString());
+
+        print(hitJson.isHost);
     }
 }

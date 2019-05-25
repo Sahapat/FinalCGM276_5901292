@@ -31,7 +31,8 @@ public class Character : MonoBehaviour
     }
     public void TakeDamage(int Damage)
     {
-        characterHealth.HP += Damage;
+        characterHealth.HP -= Damage;
+        GameCore.networkManager.sendTakeDamage(characterHealth.HP);
     }
     public void UpdateHP(int current)
     {
