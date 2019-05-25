@@ -127,6 +127,7 @@ public class NetworkManager : MonoBehaviour
     }
     void OnOtherFiring(SocketIOEvent socketIOEvent)
     {
+        print("in");
         var shootData = FiringJson.CreateFromJson(socketIOEvent.data.ToString());
 
         GameCore.gamemanager.OthetShoot(shootData.isHost,shootData.rotationZ);

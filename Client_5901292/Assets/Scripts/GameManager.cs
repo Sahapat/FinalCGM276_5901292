@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private bool isSetUp = false;
     private bool controlable = false;
 
-    int numShoot = 0;
+    public int numShoot = 0;
 
     void Awake()
     {
@@ -39,15 +39,32 @@ public class GameManager : MonoBehaviour
     {
         if (isSetUp)
         {
-            if(Input.GetMouseButtonDown(0) && controlable)
+            if ((Input.GetMouseButtonDown(0) && controlable))
             {
-                if(GameCore.networkManager.isHost)
+                if (GameCore.networkManager.isHost)
                 {
                     m_clients[0].DoShoot();
-                    numShoot += 1;
+                }
+                else
+                {
+                    m_clients[1].DoShoot();
                 }
             }
-            if(numShoot >= 2)
+            else if (Input.touches.Length > 0)
+            {
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    if (GameCore.networkManager.isHost)
+                    {
+                        m_clients[0].DoShoot();
+                    }
+                    else
+                    {
+                        m_clients[1].DoShoot();
+                    }
+                }
+            }
+            if (numShoot >= 2)
             {
                 numShoot = 0;
                 controlable = false;
@@ -64,7 +81,7 @@ public class GameManager : MonoBehaviour
             m_clients[0].SetUp(MainMenu.inputString);
             m_clients[1].SetUp(GameCore.networkManager.otherPlayerName);
 
-        
+
         }
         else
         {
@@ -78,14 +95,14 @@ public class GameManager : MonoBehaviour
         gamestart_show.text = "Game Start";
         Destroy(m_animator.gameObject, 0.5f);
         controlable = true;
-        foreach(var i in m_clients)
+        foreach (var i in m_clients)
         {
             i.SetEnableGun();
         }
     }
-    public void OthetShoot(bool isHost,float rotationZ)
+    public void OthetShoot(bool isHost, float rotationZ)
     {
-        if(isHost)
+        if (isHost)
         {
             m_clients[0].DoShoot(rotationZ);
         }
@@ -93,7 +110,6 @@ public class GameManager : MonoBehaviour
         {
             m_clients[1].DoShoot(rotationZ);
         }
-        numShoot +=1;
     }
     void ChangeState()
     {

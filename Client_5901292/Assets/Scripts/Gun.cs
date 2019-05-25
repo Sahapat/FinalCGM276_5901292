@@ -35,13 +35,16 @@ public class Gun : MonoBehaviour
         var bullet = Instantiate(bulletObj,shootPosition.position,shootPosition.rotation);
         GunParticle.Play();
         DisableGun();
+        GameCore.gamemanager.numShoot+=1;
     }
     public void Shoot(LayerMask mask)
     {
+        if(!isGunEnable)return;
         var bullet = Instantiate(bulletObj,shootPosition.position,shootPosition.rotation);
         bullet.AddComponent(typeof(CollideChecker));
         bullet.GetComponent<CollideChecker>().SetUp(damagePerHit,mask);
         GunParticle.Play();
         DisableGun();
+        GameCore.gamemanager.numShoot+=1;
     }
 }

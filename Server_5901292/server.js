@@ -145,8 +145,8 @@ io.on('connection', function (socket) {
             isHost:data.isHost,
             lobbyIndex:data.lobbyIndex
         }
-
-        socket.broadcast.to(lobbys[data.lobbyIndex]).emit('otherFiring',resToOther);
+        console.log(data.lobbyIndex +" firing");
+        socket.broadcast.to(lobbys[data.lobbyIndex]).emit('other firing',resToOther);
     })
 })
 function checkEmptyLobby() {
