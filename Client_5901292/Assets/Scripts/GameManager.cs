@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Vector3 rightToLeftChange = Vector3.zero;
     [SerializeField] float jumpPower = 2f;
     [Header("Game end ref")]
-    [SerializeField]UnityEngine.UI.Text winnerTxt = null;
+    [SerializeField] UnityEngine.UI.Text winnerTxt = null;
     private bool isSetUp = false;
     private bool controlable = false;
 
@@ -65,17 +65,17 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            if(numShoot >= 2)
+            if (numShoot >= 2)
             {
                 numShoot = 0;
                 controlable = false;
-                Invoke("ChangeState",1f);
+                Invoke("ChangeState", 1f);
             }
         }
     }
-    public void GameEnd(string name,bool isHost)
+    public void GameEnd(string name, bool isHost)
     {
-        if(isHost)
+        if (isHost)
         {
             Destroy(m_clients[0].gameObject);
         }
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);
     }
-    public void SetTakedamage(int index,int health)
+    public void SetTakedamage(int index, int health)
     {
         m_clients[index].SetHealth(health);
     }
@@ -142,30 +142,37 @@ public class GameManager : MonoBehaviour
     }
     void ChangeState()
     {
-        Camera.main.transform.DOMoveY(Camera.main.transform.position.y + CameraStateYChange, changeStateDuration, false);
-        if (m_clients[0].transform.lossyScale.x > 0)
+        try
         {
-            var endValueToLeft = new Vector3(rightToLeftChange.x, m_clients[0].transform.position.y + rightToLeftChange.y, m_clients[0].transform.position.z);
-            m_clients[0].transform.DOJump(endValueToLeft, jumpPower, 1, changeStateDuration);
-            m_clients[0].facingLeft = true;
+            Camera.main.transform.DOMoveY(Camera.main.transform.position.y + CameraStateYChange, changeStateDuration, false);
+            if (m_clients[0].transform.lossyScale.x > 0)
+            {
+                var endValueToLeft = new Vector3(rightToLeftChange.x, m_clients[0].transform.position.y + rightToLeftChange.y, m_clients[0].transform.position.z);
+                m_clients[0].transform.DOJump(endValueToLeft, jumpPower, 1, changeStateDuration);
+                m_clients[0].facingLeft = true;
 
-            var endValueToRight = new Vector3(leftToRightChange.x, m_clients[1].transform.position.y + leftToRightChange.y, m_clients[1].transform.position.z);
-            m_clients[1].transform.DOJump(endValueToRight, jumpPower, 1, changeStateDuration);
-            m_clients[1].facingLeft = false;
+                var endValueToRight = new Vector3(leftToRightChange.x, m_clients[1].transform.position.y + leftToRightChange.y, m_clients[1].transform.position.z);
+                m_clients[1].transform.DOJump(endValueToRight, jumpPower, 1, changeStateDuration);
+                m_clients[1].facingLeft = false;
 
-            Invoke("FinishStateChange", changeStateDuration + 0.05f);
+                Invoke("FinishStateChange", changeStateDuration + 0.05f);
+            }
+            else
+            {
+                var endValueToLeft = new Vector3(rightToLeftChange.x, m_clients[1].transform.position.y + rightToLeftChange.y, m_clients[1].transform.position.z);
+                m_clients[1].transform.DOJump(endValueToLeft, jumpPower, 1, changeStateDuration);
+                m_clients[1].facingLeft = true;
+
+                var endValueToRight = new Vector3(leftToRightChange.x, m_clients[0].transform.position.y + leftToRightChange.y, m_clients[0].transform.position.z);
+                m_clients[0].transform.DOJump(endValueToRight, jumpPower, 1, changeStateDuration);
+                m_clients[0].facingLeft = false;
+
+                Invoke("FinishStateChange", changeStateDuration);
+            }
         }
-        else
+        catch (System.NullReferenceException)
         {
-            var endValueToLeft = new Vector3(rightToLeftChange.x, m_clients[1].transform.position.y + rightToLeftChange.y, m_clients[1].transform.position.z);
-            m_clients[1].transform.DOJump(endValueToLeft, jumpPower, 1, changeStateDuration);
-            m_clients[1].facingLeft = true;
 
-            var endValueToRight = new Vector3(leftToRightChange.x, m_clients[0].transform.position.y + leftToRightChange.y, m_clients[0].transform.position.z);
-            m_clients[0].transform.DOJump(endValueToRight, jumpPower, 1, changeStateDuration);
-            m_clients[0].facingLeft = false;
-
-            Invoke("FinishStateChange", changeStateDuration);
         }
     }
     void FinishStateChange()

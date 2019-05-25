@@ -31,14 +31,7 @@ public class Character : MonoBehaviour
     }
     public void GunFlip()
     {
-        if(facingLeft)
-        {
-            gun.SetFlip(-1);
-        }
-        else
-        {
-            gun.SetFlip(1);
-        }
+        gun.SetFlip();
     }
     public void TakeDamage(int Damage)
     {

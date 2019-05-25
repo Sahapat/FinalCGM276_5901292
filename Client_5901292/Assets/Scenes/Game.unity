@@ -4380,7 +4380,7 @@ MonoBehaviour:
   leftToRightChange: {x: -2, y: 1.1, z: 0}
   rightToLeftChange: {x: 1, y: 1.1, z: 0}
   jumpPower: 1
-  winnerTxt: {fileID: 730594868}
+  winnerTxt: {fileID: 1288088146}
   numShoot: 0
 --- !u!114 &1411508029
 MonoBehaviour:
@@ -5273,6 +5273,11 @@ PrefabInstance:
         type: 3}
       propertyPath: time
       value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092061409721633019, guid: ef6dd73abae4f3542b2bbdad5a4e502b,
+        type: 3}
+      propertyPath: direction
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3092061410808782847, guid: ef6dd73abae4f3542b2bbdad5a4e502b,
         type: 3}

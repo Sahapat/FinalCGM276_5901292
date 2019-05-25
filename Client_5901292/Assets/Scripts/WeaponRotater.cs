@@ -30,6 +30,10 @@ public class WeaponRotater : MonoBehaviour
     [SerializeField] LineRenderer laserShowing = null;
 
     float counterTime = 0;
+    void Start()
+    {
+        SetFlip();
+    }
     void FixedUpdate()
     {
         if (isRotate)
@@ -56,7 +60,9 @@ public class WeaponRotater : MonoBehaviour
                 direction *= (-1);
                 counterTime = 0;
             }
-            transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction);
+            /* transform.localRotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + speed * Time.deltaTime * direction); */
+            transform.Rotate(new Vector3(0,0,direction*speed*Time.deltaTime));
+            currentAngle= transform.eulerAngles.z;
             counterTime += Time.deltaTime;
             laserShowing.enabled = true;
         }
@@ -78,8 +84,16 @@ public class WeaponRotater : MonoBehaviour
     {
         isRotate = false;
     }
-    public void SetFlip(int direction)
+    public void SetFlip()
     {
-        this.direction = direction;
+        if(this.transform.root.lossyScale.z < 0 )
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        }
+        counterTime = 0;
     }
 }

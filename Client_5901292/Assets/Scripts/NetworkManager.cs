@@ -47,14 +47,14 @@ public class NetworkManager : MonoBehaviour
     }
     public void sendTakeDamage(int playerHealth)
     {
-        var sendTakeDamageJson = new HitJson(playerHealth,!isHost,(byte)lobbyDataindex);
+        var sendTakeDamageJson = new HitJson(playerHealth,isHost,(byte)lobbyDataindex);
         var reqTake = JsonUtility.ToJson(sendTakeDamageJson);
 
         m_socketIoComponent.Emit("take damage",new JSONObject(reqTake));
     }
     public void sendWinner()
     {
-        var sendWinner = new WiningCheckJson(otherPlayerName,lobbyDataindex,isHost);
+        var sendWinner = new WiningCheckJson(otherPlayerName,lobbyDataindex,!isHost);
         var reqWinner = JsonUtility.ToJson(sendWinner);
         m_socketIoComponent.Emit("sent winner",new JSONObject(reqWinner));
     }

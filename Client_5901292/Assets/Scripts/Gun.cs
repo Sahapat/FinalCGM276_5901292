@@ -29,9 +29,9 @@ public class Gun : MonoBehaviour
         weaponRotater.StopRotate();
         isGunEnable = false;
     }
-    public void SetFlip(int direction)
+    public void SetFlip()
     {
-        weaponRotater.SetFlip(direction);
+        weaponRotater.SetFlip();
     }
     public void Shoot(float z)
     {
