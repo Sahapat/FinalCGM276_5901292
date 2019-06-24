@@ -4,16 +4,14 @@ The requirement is create the game with Node.js. I chose the game name is ["MR G
 from ketchapp studio to remake it into online game.
 
 # Screenshots
-
-### Login&MainMenu
+<b>Login&MainMenu</b>
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Login.png" width="420"/>
     &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/MainMenu.png" width="420"/>
   </p>
-  
-### Lobby
+<b>Lobby</b>
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Lobbylist.png" width="420"/>
@@ -21,7 +19,7 @@ from ketchapp studio to remake it into online game.
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/LobbyStart.png" width="420"/>
   </p>
   
-### Game
+<b>Game</b>
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/GameReady.png" width="420"/>
