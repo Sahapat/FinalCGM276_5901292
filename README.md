@@ -4,27 +4,31 @@ The requirement is create the game with Node.js. I chose the game name is ["MR G
 from ketchapp studio to remake it into online game.
 
 # Screenshots
-  ## Login&MainMenu
+
+### Login&MainMenu
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Login.png" width="420"/>
     &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/MainMenu.png" width="420"/>
   </p>
-  ## Lobby
+  
+### Lobby
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Lobbylist.png" width="420"/>
     &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/LobbyStart.png" width="420"/>
   </p>
-  ## Game
+  
+### Game
   <p float="left">
     &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/GameReady.png" width="420"/>
     &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Game.png" width="420"/>
   </p>
+  
 # Others
 Special thanks to [Ketchapp Studio](https://www.facebook.com/ketchappgames/) for the idea.
 Gameplay and presentation are in my [Youtube channel](https://www.youtube.com/watch?v=ei6RfNtr668).
