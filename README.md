@@ -6,21 +6,21 @@ from ketchapp studio to remake it into online game.
 # Screenshots
 <b>Login&MainMenu</b>
   <p float="left">
+    &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Login.png" width="420"/>
-    &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/MainMenu.png" width="420"/>
   </p>
 <b>Lobby</b>
   <p float="left">
+    &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Lobbylist.png" width="420"/>
-    &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/LobbyStart.png" width="420"/>
   </p>
   
 <b>Game</b>
   <p float="left">
+    &ensp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/GameReady.png" width="420"/>
-    &emsp;
     <img src="https://github.com/Sahapat/FinalCGM276_5901292/blob/master/Screenshots/Game.png" width="420"/>
   </p>
   
