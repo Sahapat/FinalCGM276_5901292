@@ -1,5 +1,5 @@
 # What is the project about?
-This project is part of the Final project of CGM276 GameImplement(Focus on the Online game). 
+This project is part of the Final project from CGM276 GameImplement(Focus on the Online game). 
 The requirement is create the game with Node.js. I chose the game name is ["MR GUN"](https://play.google.com/store/apps/details?id=com.ketchapp.mrgun) 
 from ketchapp studio to remake it into online game.
 
